@@ -1,2 +1,14 @@
-https://www.youtube.com/watch?v=G9i78WoBBIU
-@ 1:50min
+############Vafernan############
+
+Changelog:
+
+11/02:
+	{
+		Splited main.c, created draw.c;
+		Loading different textures based on direction;
+		Added: # define BypassParse 1
+	}
+	problem: If i look at a image sideways I can see the texture almost complete instead of overlaping
+
+
+############Pferrei############

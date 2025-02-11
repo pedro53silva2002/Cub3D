@@ -15,7 +15,8 @@ void	init_player(t_player *player)
 	player->right_rotate = false;
 }
 
-/// @brief Handles key press events and updates the player's movement and rotation flags.
+/// @brief Handles key press events and updates the player's
+/// movement and rotation flags.
 /// @param keycode The key code of the pressed key.
 /// @param player A pointer to the player structure.
 /// @return Always returns 0.
@@ -36,7 +37,8 @@ int	key_press(int keycode, t_player *player)
 	return (0);
 }
 
-/// @brief Handles key release events and updates the player's movement and rotation flags.
+/// @brief Handles key release events and updates the player's
+/// movement and rotation flags.
 /// @param keycode The key code of the released key.
 /// @param player A pointer to the player structure.
 /// @return Always returns 0.
@@ -57,7 +59,8 @@ int	key_release(int keycode, t_player *player)
 	return (0);
 }
 
-/// @brief Updates the player's position and angle based on the current movement and rotation flags.
+/// @brief Updates the player's position and angle based on the current
+/// movement and rotation flags.
 /// @param player A pointer to the player structure.
 void	move_player(t_player *player)
 {
