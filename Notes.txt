@@ -10,5 +10,6 @@ Changelog:
 	}
 	problem: If i look at a image sideways I can see the texture almost complete instead of overlaping
 
-
+12/02:
+Maybe the problem is determining the wall facing direction. its better to understand with the colored walls!
 ############Pferrei############

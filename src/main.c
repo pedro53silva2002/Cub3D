@@ -40,22 +40,22 @@ void	init_game(t_game *game)
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->data = mlx_get_data_addr(game->img, &game->bpp, &game->size_line,
 			&game->endian);
-	game->texture_img[0] = mlx_xpm_file_to_image(game->mlx, "./textures/n.xpm",
+	game->texture_img[0] = mlx_xpm_file_to_image(game->mlx, "./textures/red.xpm",
 			&game->texture_width[0], &game->texture_height[0]);
 	game->texture_data[0] = mlx_get_data_addr(game->texture_img[0],
 			&game->texture_bpp[0], &game->texture_size_line[0],
 			&game->texture_endian[0]);
-	game->texture_img[1] = mlx_xpm_file_to_image(game->mlx, "./textures/s.xpm",
+	game->texture_img[1] = mlx_xpm_file_to_image(game->mlx, "./textures/blue.xpm",
 			&game->texture_width[1], &game->texture_height[1]);
 	game->texture_data[1] = mlx_get_data_addr(game->texture_img[1],
 			&game->texture_bpp[1], &game->texture_size_line[1],
 			&game->texture_endian[1]);
-	game->texture_img[2] = mlx_xpm_file_to_image(game->mlx, "./textures/e.xpm",
+	game->texture_img[2] = mlx_xpm_file_to_image(game->mlx, "./textures/yellow.xpm",
 			&game->texture_width[2], &game->texture_height[2]);
 	game->texture_data[2] = mlx_get_data_addr(game->texture_img[2],
 			&game->texture_bpp[2], &game->texture_size_line[2],
 			&game->texture_endian[2]);
-	game->texture_img[3] = mlx_xpm_file_to_image(game->mlx, "./textures/w.xpm",
+	game->texture_img[3] = mlx_xpm_file_to_image(game->mlx, "./textures/green.xpm",
 			&game->texture_width[3], &game->texture_height[3]);
 	game->texture_data[3] = mlx_get_data_addr(game->texture_img[3],
 			&game->texture_bpp[3], &game->texture_size_line[3],
