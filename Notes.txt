@@ -12,4 +12,12 @@ Changelog:
 
 12/02:
 Maybe the problem is determining the wall facing direction. its better to understand with the colored walls!
+
+14/02:
+{
+	trying to render map based on the map design and not player positionn;
+	Added new vars to the struct for map dimension;
+	Inited those values in the parsebypass;
+	
+}
 ############Pferrei############

@@ -175,6 +175,70 @@ bool	touch(float px, float py, t_game *game)
 /// @param game A pointer to the game structure containing the map and image data.
 /// @param start_x The starting x-coordinate of the ray.
 /// @param i The index of the current ray being drawn.
+/* Messy, I think it is drawing the textures based on player position and not map position */
+// void	draw_line(t_player *player, t_game *game, float start_x, int i)
+// {
+// 	float	cos_angle;
+// 	float	sin_angle;
+// 	float	ray_x;
+// 	float	ray_y;
+// 	float	dist;
+// 	float	height;
+// 	int		start_y;
+// 	int		end;
+// 	int		tex_x;
+// 	int		tex_y;
+// 	float	step;
+// 	float	tex_pos;
+// 	int		texture_index;
+
+// 	cos_angle = cos(start_x);
+// 	sin_angle = sin(start_x);
+// 	ray_x = player->x;
+// 	ray_y = player->y;
+// 	while (!touch(ray_x, ray_y, game))
+// 	{
+// 		if (DEBUG)
+// 			put_pixel(ray_x, ray_y, 0xFF0000, game);
+// 		ray_x += cos_angle;
+// 		ray_y += sin_angle;
+// 	}
+// 	if (!DEBUG)
+// 	{
+// 		dist = fixed_dist(player->x, player->y, ray_x, ray_y, game);
+// 		height = (BLOCK / dist) * (WIDTH / 2);
+// 		start_y = (HEIGHT - height) / 2;
+// 		end = start_y + height;
+// 		// Determine the texture index based on the direction of the ray
+// 		if (fabs(ray_x - floor(ray_x)) < fabs(ray_y - floor(ray_y)))
+// 		{
+// 			tex_x = (int)(ray_x * game->texture_width[0]) % game->texture_width[0];
+// 			if (cos_angle > 0)
+// 				texture_index = 0; // North texture
+// 			else
+// 				texture_index = 1; // South texture
+// 		}
+// 		else
+// 		{
+// 			tex_x = (int)(ray_y * game->texture_width[0]) % game->texture_width[0];
+// 			if (sin_angle > 0)
+// 				texture_index = 2; // East texture
+// 			else
+// 				texture_index = 3; // West texture
+// 		}
+// 		step = 1 * game->texture_height[texture_index] / height;
+// 		tex_pos = (start_y - HEIGHT / 2 + height / 2) * step;
+// 		while (start_y < end)
+// 		{
+// 			tex_y = (int)tex_pos & (game->texture_height[texture_index] - 1);
+// 			tex_pos += step;
+// 			put_texture_pixel(i, start_y, tex_x, tex_y, game, texture_index);
+// 			start_y++;
+// 		}
+// 	}
+// }
+
+/* Not bad... */
 void	draw_line(t_player *player, t_game *game, float start_x, int i)
 {
 	float	cos_angle;
@@ -186,10 +250,11 @@ void	draw_line(t_player *player, t_game *game, float start_x, int i)
 	int		start_y;
 	int		end;
 	int		tex_x;
-	int		tex_y;
-	float	step;
-	float	tex_pos;
-	int		texture_index;
+	int		tex_y = 0; // Initialize to a default value
+	int		texture_index = -1; // Initialize to an invalid value
+	float	wall_x;
+	int		map_x;
+	int		map_y;
 
 	cos_angle = cos(start_x);
 	sin_angle = sin(start_x);
@@ -202,36 +267,108 @@ void	draw_line(t_player *player, t_game *game, float start_x, int i)
 		ray_x += cos_angle;
 		ray_y += sin_angle;
 	}
+
+	// Debug: Log ray position
+	//printf("Ray hit at: (%f, %f)\n", ray_x, ray_y);
+
 	if (!DEBUG)
 	{
 		dist = fixed_dist(player->x, player->y, ray_x, ray_y, game);
 		height = (BLOCK / dist) * (WIDTH / 2);
 		start_y = (HEIGHT - height) / 2;
 		end = start_y + height;
-		// Determine the texture index based on the direction of the ray
-		if (fabs(ray_x - floor(ray_x)) < fabs(ray_y - floor(ray_y)))
+
+		// Debug: Log distance and height
+		//printf("Distance: %f, Height: %f\n", dist, height);
+
+		// Determine the map position of the wall
+		map_x = (int)(ray_x / BLOCK);
+		map_y = (int)(ray_y / BLOCK);
+
+		// Debug: Log map position
+		//printf("Map position: (%d, %d)\n", map_x, map_y);
+
+		// Ensure map_x and map_y are within bounds
+		if (map_x < 0 || map_x >= game->map_width || map_y < 0 || map_y >= game->map_height)
 		{
-			tex_x = (int)(ray_x * game->texture_width[0]) % game->texture_width[0];
-			if (cos_angle > 0)
-				texture_index = 0; // North texture
-			else
-				texture_index = 1; // South texture
+			printf("Out of bounds: (%d, %d)\n", map_x, map_y);
+			return;
 		}
-		else
+
+		// Determine the texture index based on the wall's position in the map
+		if (game->map[map_y][map_x] == '1')
 		{
-			tex_x = (int)(ray_y * game->texture_width[0]) % game->texture_width[0];
-			if (sin_angle > 0)
-				texture_index = 2; // East texture
+			if (map_y > 0 && game->map[map_y - 1][map_x] == '0')
+				texture_index = 0; // Top wall (red)
+			else if (map_y < game->map_height - 1 && game->map[map_y + 1][map_x] == '0')
+				texture_index = 1; // Bottom wall (blue)
+			else if (map_x > 0 && game->map[map_y][map_x - 1] == '0')
+				texture_index = 2; // Left wall (yellow)
+			else if (map_x < game->map_width - 1 && game->map[map_y][map_x + 1] == '0')
+				texture_index = 3; // Right wall (green)
 			else
-				texture_index = 3; // West texture
+			{
+				// Determine the texture index based on the direction of the ray
+				if (fabs(ray_x - floor(ray_x)) < fabs(ray_y - floor(ray_y)))
+				{
+					wall_x = ray_y;
+					if (cos_angle > 0)
+						texture_index = 0; // North texture
+					else
+						texture_index = 1; // South texture
+				}
+				else
+				{
+					wall_x = ray_x;
+					if (sin_angle > 0)
+						texture_index = 2; // East texture
+					else
+						texture_index = 3; // West texture
+				}
+			}
 		}
-		step = 1 * game->texture_height[texture_index] / height;
-		tex_pos = (start_y - HEIGHT / 2 + height / 2) * step;
+
+		// Debug: Log texture index
+		//printf("Texture index: %d\n", texture_index);
+
+		if (texture_index < 0 || texture_index >= 4)
+		{
+			printf("Invalid texture index: %d\n", texture_index);
+			return;
+		}
+
+		wall_x = (fabs(ray_x - floor(ray_x)) < fabs(ray_y - floor(ray_y))) ? ray_y : ray_x;
+		wall_x -= floor(wall_x);
+		tex_x = (int)(wall_x * game->texture_width[texture_index]);
+		if ((fabs(ray_x - floor(ray_x)) < fabs(ray_y - floor(ray_y)) && cos_angle > 0) ||
+			(fabs(ray_x - floor(ray_x)) >= fabs(ray_y - floor(ray_y)) && sin_angle < 0))
+		{
+			tex_x = game->texture_width[texture_index] - tex_x - 1;
+		}
+
+		// Debug: Log texture coordinates
+		//printf("Texture coordinates: (%d, %d)\n", tex_x, tex_y);
+
 		while (start_y < end)
 		{
-			tex_y = (int)tex_pos & (game->texture_height[texture_index] - 1);
-			tex_pos += step;
-			put_texture_pixel(i, start_y, tex_x, tex_y, game, texture_index);
+			int d = (start_y * 256 - HEIGHT * 128 + height * 128);
+			tex_y = ((d * game->texture_height[texture_index]) / height) / 256;
+
+			// Clamp tex_y to valid range
+			if (tex_y < 0)
+				tex_y = 0;
+			else if (tex_y >= game->texture_height[texture_index])
+				tex_y = game->texture_height[texture_index] - 1;
+
+			// Ensure tex_x is within bounds
+			if (tex_x < 0 || tex_x >= game->texture_width[texture_index])
+			{
+				printf("Texture coordinates out of bounds: (%d, %d)\n", tex_x, tex_y);
+				return;
+			}
+
+			int color = *(int *)(game->texture_data[texture_index] + (tex_y * game->texture_size_line[texture_index] + tex_x * (game->texture_bpp[texture_index] / 8)));
+			put_pixel(i, start_y, color, game);
 			start_y++;
 		}
 	}

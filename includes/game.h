@@ -19,6 +19,8 @@
 
 # define PI 3.14159265359
 
+#define NUM_TEXTURES 4
+
 #include "minilibx-linux/mlx.h"
 #include "libft/libft.h"
 #include <stdio.h>
@@ -82,10 +84,13 @@ typedef struct s_game
 	int			texture_endian[4];
 	t_player	player;
 	char		**map;
+	int			map_width;
+	int			map_height;
+
 } t_game;
 
 //main.c:
-char	**get_map(void);
+char	**get_map(t_game *game);
 void	init_game(t_game *game);
 int		close_window(t_game *game);
 int		handle_key(int key, t_game *game);

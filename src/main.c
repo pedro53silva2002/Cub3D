@@ -2,7 +2,7 @@
 
 /// @brief Generates a hardcoded map for the game.
 /// @return A pointer to the generated map array.
-char	**get_map(void)
+char	**get_map(t_game *game)
 {
 	char	**map;
 
@@ -12,14 +12,16 @@ char	**get_map(void)
 		map[0] = "111111111111111";
 		map[1] = "100000000000001";
 		map[2] = "100000000000001";
-		map[3] = "100000100000001";
+		map[3] = "100000000000001";
 		map[4] = "100000000000001";
-		map[5] = "100000010000001";
-		map[6] = "100001000000001";
+		map[5] = "100000001000001";
+		map[6] = "100000000000001";
 		map[7] = "100000000000001";
 		map[8] = "100000000000001";
 		map[9] = "111111111111111";
 		map[10] = NULL;
+        game->map_width = 15;
+        game->map_height = 10;
 		return (map);
 	}
 	else
@@ -34,7 +36,7 @@ char	**get_map(void)
 void	init_game(t_game *game)
 {
 	init_player(&game->player);
-	game->map = get_map();
+	game->map = get_map(game);
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
@@ -50,12 +52,12 @@ void	init_game(t_game *game)
 	game->texture_data[1] = mlx_get_data_addr(game->texture_img[1],
 			&game->texture_bpp[1], &game->texture_size_line[1],
 			&game->texture_endian[1]);
-	game->texture_img[2] = mlx_xpm_file_to_image(game->mlx, "./textures/yellow.xpm",
+	game->texture_img[2] = mlx_xpm_file_to_image(game->mlx, "./textures/green.xpm",
 			&game->texture_width[2], &game->texture_height[2]);
 	game->texture_data[2] = mlx_get_data_addr(game->texture_img[2],
 			&game->texture_bpp[2], &game->texture_size_line[2],
 			&game->texture_endian[2]);
-	game->texture_img[3] = mlx_xpm_file_to_image(game->mlx, "./textures/green.xpm",
+	game->texture_img[3] = mlx_xpm_file_to_image(game->mlx, "./textures/yellow.xpm",
 			&game->texture_width[3], &game->texture_height[3]);
 	game->texture_data[3] = mlx_get_data_addr(game->texture_img[3],
 			&game->texture_bpp[3], &game->texture_size_line[3],
