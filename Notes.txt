@@ -20,4 +20,32 @@ Maybe the problem is determining the wall facing direction. its better to unders
 	Inited those values in the parsebypass;
 	
 }
+
+15/02:
+{
+    Merged with Pedro's program;
+    Implemented colision;
+    Created separated folders for stuff;
+	Added Ceelinf and floor color, but is hard coded in main;
+    Trying to fix texture overlaping / extension:
+        I think I understant the problem.
+        The further I am from the textures the more they shrink, the closer I am the more they expand.
+        How can I fix this??
+	
+
+### Explanation:
+1. **cast_ray**: Casts a ray from the player's position at a given angle until a wall is hit.
+2. **calculate_wall_slice_dimensions**: Calculates the vertical dimensions of the wall slice, including the perpendicular distance to the wall and the height of the wall slice.
+3. **calculate_texture_x**: Calculates the x-coordinate on the texture (the column to sample) based on the hit position and the texture index.
+4. **draw_vertical_stripe**: Draws a vertical stripe of the wall on the screen using the calculated texture coordinates.
+5. **draw_line**: Combines the above functions to cast a ray, calculate the wall slice dimensions, determine the texture index, calculate the texture coordinates, and draw the vertical stripe on the screen.
+
+These renamed functions should be more understandable and descriptive of their purposes.
+
+}
+
+changing:
+void cast_ray(t_player *player, t_game *game, float ray_angle, float *hit_x, float *hit_y, int *side);
+int determine_texture_index(t_game *game, int map_x, int map_y, float ray_angle);
+draw_line
 ############Pferrei############
