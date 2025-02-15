@@ -43,7 +43,7 @@ void	init_game(t_game *game)
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->data = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
 
-	// Set ceiling and floor colors (example values)
+	// Set ceiling and floor colors
 	game->ceiling_r = 35;
 	game->ceiling_g = 19;
 	game->ceiling_b = 73;
@@ -52,13 +52,13 @@ void	init_game(t_game *game)
 	game->floor_b = 0;
 
 	// Load textures
-	game->texture_img[0] = mlx_xpm_file_to_image(game->mlx, "./textures/n.xpm", &game->texture_width[0], &game->texture_height[0]);
+	game->texture_img[0] = mlx_xpm_file_to_image(game->mlx, "./textures/coal.xpm", &game->texture_width[0], &game->texture_height[0]);
 	game->texture_data[0] = mlx_get_data_addr(game->texture_img[0], &game->texture_bpp[0], &game->texture_size_line[0], &game->texture_endian[0]);
-	game->texture_img[1] = mlx_xpm_file_to_image(game->mlx, "./textures/s.xpm", &game->texture_width[1], &game->texture_height[1]);
+	game->texture_img[1] = mlx_xpm_file_to_image(game->mlx, "./textures/mud.xpm", &game->texture_width[1], &game->texture_height[1]);
 	game->texture_data[1] = mlx_get_data_addr(game->texture_img[1], &game->texture_bpp[1], &game->texture_size_line[1], &game->texture_endian[1]);
-	game->texture_img[2] = mlx_xpm_file_to_image(game->mlx, "./textures/e.xpm", &game->texture_width[2], &game->texture_height[2]);
+	game->texture_img[2] = mlx_xpm_file_to_image(game->mlx, "./textures/planks.xpm", &game->texture_width[2], &game->texture_height[2]);
 	game->texture_data[2] = mlx_get_data_addr(game->texture_img[2], &game->texture_bpp[2], &game->texture_size_line[2], &game->texture_endian[2]);
-	game->texture_img[3] = mlx_xpm_file_to_image(game->mlx, "./textures/w.xpm", &game->texture_width[3], &game->texture_height[3]);
+	game->texture_img[3] = mlx_xpm_file_to_image(game->mlx, "./textures/redbrick.xpm", &game->texture_width[3], &game->texture_height[3]);
 	game->texture_data[3] = mlx_get_data_addr(game->texture_img[3], &game->texture_bpp[3], &game->texture_size_line[3], &game->texture_endian[3]);
 
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);

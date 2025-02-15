@@ -31,17 +31,10 @@ Maybe the problem is determining the wall facing direction. its better to unders
         I think I understant the problem.
         The further I am from the textures the more they shrink, the closer I am the more they expand.
         How can I fix this??
-	
 
-### Explanation:
-1. **cast_ray**: Casts a ray from the player's position at a given angle until a wall is hit.
-2. **calculate_wall_slice_dimensions**: Calculates the vertical dimensions of the wall slice, including the perpendicular distance to the wall and the height of the wall slice.
-3. **calculate_texture_x**: Calculates the x-coordinate on the texture (the column to sample) based on the hit position and the texture index.
-4. **draw_vertical_stripe**: Draws a vertical stripe of the wall on the screen using the calculated texture coordinates.
-5. **draw_line**: Combines the above functions to cast a ray, calculate the wall slice dimensions, determine the texture index, calculate the texture coordinates, and draw the vertical stripe on the screen.
-
-These renamed functions should be more understandable and descriptive of their purposes.
-
+		problem is in:
+		int calculate_texture_x(t_game *game, int texture_index, float hit_x, float hit_y)
+		FIXED!!!
 }
 
 changing:

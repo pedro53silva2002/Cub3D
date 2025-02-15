@@ -54,18 +54,13 @@ void calculate_wall_slice_dimensions(t_game *game, t_player *player, float hit_x
 /// @return The x-coordinate (column) in the texture.
 int calculate_texture_x(t_game *game, int texture_index, float hit_x, float hit_y)
 {
-	float wall_x;
-	// For north/south walls, use the fractional part of the x-coordinate.
-	// For east/west walls, use the fractional part of the y-coordinate.
-	if (texture_index == 0 || texture_index == 1)
-		wall_x = hit_x - floor(hit_x);
-	else
-		wall_x = hit_y - floor(hit_y);
+	(void)game; // Mark game as unused if not needed
 
-	int tex_x = (int)(wall_x * game->texture_width[texture_index]);
-	return tex_x;
+	if (texture_index == 0 || texture_index == 1) // North or South walls
+		return (int)hit_x % BLOCK;
+	else // East or West walls
+		return (int)hit_y % BLOCK;
 }
-
 
 /// @brief Draws a vertical stripe of the wall on the screen.
 /// @param game Pointer to the game structure.
