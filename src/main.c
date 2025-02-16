@@ -5,10 +5,8 @@
 char	**get_map(void)
 {
 	char	**map;
-	bool	Parsing_map; // TODO Boll to bypass map parsing
 
-	Parsing_map = 0;
-	if (!Parsing_map)
+	if (BypassParse)
 	{
 		map = malloc(sizeof(char *) * 11);
 		map[0] = "111111111111111";
@@ -23,7 +21,7 @@ char	**get_map(void)
 		map[9] = "111111111111111";
 		map[10] = NULL;
 	}
-	if (Parsing_map)
+	if (!BypassParse)
 	{
 		map = NULL;
 	}
@@ -44,12 +42,12 @@ void	init_game(t_game *game)
 	game->data = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
 
 	// Set ceiling and floor colors
-	game->ceiling_r = 35;
-	game->ceiling_g = 19;
-	game->ceiling_b = 73;
-	game->floor_r = 0;
-	game->floor_g = 0;
-	game->floor_b = 0;
+	game->ceiling_r = 0;
+	game->ceiling_g = 200;
+	game->ceiling_b = 200;
+	game->floor_r = 50;
+	game->floor_g = 100;
+	game->floor_b = 50;
 
 	// Load textures
 	game->texture_img[0] = mlx_xpm_file_to_image(game->mlx, "./textures/coal.xpm", &game->texture_width[0], &game->texture_height[0]);

@@ -6,9 +6,16 @@
 # define HEIGHT 720
 # define BLOCK 64
 //Variables for debbuging
-# define DEBUG 1
+# define DEBUG 0
 # define BypassParse 1
+# define TEXTURE_DEBUG 1
 //end of it
+
+# define NORTH_WALL_TEXTURE_INDEX 0
+# define SOUTH_WALL_TEXTURE_INDEX 1
+# define WEST_WALL_TEXTURE_INDEX 2
+# define EAST_WALL_TEXTURE_INDEX 3
+# define DEFAULT_TEXTURE_INDEX 0
 
 //Defines for keypress
 # define W 119
@@ -84,9 +91,11 @@ float	fixed_dist(float x1, float y1, float x2, float y2, t_game *game);
 bool	touch(float px, float py, t_game *game);
 int		draw_loop(t_game *game);
 int		determine_texture_index(t_game *game, int map_x, int map_y);
+//int determine_texture_index(t_game *game, int map_x, int map_y, float ray_angle);
 void	draw_line(t_player *player, t_game *game, float start_x, int i);
 //Draw_debug
-void	draw_square(int x, int y, int size, int color, t_game *game);
+void	debug_draw_line(t_player *player, t_game *game, float start_x, int i);
+void	debug_draw_square(int x, int y, int size, int color, t_game *game);
 void	draw_map(t_game *game);
 
 //Parsing

@@ -17,6 +17,7 @@ void	put_pixel(int x, int y, int color, t_game *game)
 	game->data[index + 2] = (color >> 16) & 0xFF;
 }
 
+
 void	put_texture_pixel(int x, int y, int tex_x, int tex_y, t_game *game, int texture_index)
 {
 	int	color;
@@ -100,23 +101,184 @@ bool	touch(float px, float py, t_game *game)
 	return (false);
 }
 
-int	determine_texture_index(t_game *game, int map_x, int map_y)
+/// @brief Determines the texture index for a wall at a given map coordinate.
+/// @param game Pointer to the game structure containing map and texture info.
+/// @param map_x The x-coordinate of the wall in the map.
+/// @param map_y The y-coordinate of the wall in the map.
+/// @return The texture index for the wall.
+// int determine_texture_index(t_game *game, int map_x, int map_y)
+// {
+// 	// Check the top neighbor (North)
+// 	if (map_y > 0 && game->map[map_y - 1][map_x] == '0')
+// 	{
+// 		if (TEXTURE_DEBUG)
+// 			printf("[TEXTURE_DEBUG] Texture north\n");
+// 		return (NORTH_WALL_TEXTURE_INDEX);
+// 	}
+// 	// Check the bottom neighbor (South)
+// 	else if (map_y < game->map_height - 1 && game->map[map_y + 1][map_x] == '0')
+// 	{
+// 		if (TEXTURE_DEBUG)
+// 			printf("[TEXTURE_DEBUG] Texture south\n");
+// 		return (SOUTH_WALL_TEXTURE_INDEX);
+// 	}
+// 	// Check the left neighbor (West)
+// 	else if (map_x > 0 && game->map[map_y][map_x - 1] == '0')
+// 	{
+// 		if (TEXTURE_DEBUG)
+// 			printf("[TEXTURE_DEBUG] Texture west\n");
+// 		return (WEST_WALL_TEXTURE_INDEX);
+// 	}
+// 	// Check the right neighbor (East)
+// 	else if (map_x < game->map_width - 1 && game->map[map_y][map_x + 1] == '0')
+// 	{
+// 		if (TEXTURE_DEBUG)
+// 			printf("[TEXTURE_DEBUG] Texture east\n");
+// 		return (EAST_WALL_TEXTURE_INDEX);
+// 	}
+// 	// Check if the wall is in the middle of the map (surrounded by other walls)
+// 	else if (map_x > 0 && map_x < game->map_width - 1 &&
+// 			 map_y > 0 && map_y < game->map_height - 1)
+// 	{
+// 		if (TEXTURE_DEBUG)
+// 			printf("[TEXTURE_DEBUG] Texture middle\n");
+// 		return (0);
+// 	}
+// 	// Default: if the wall is completely surrounded (should not happen with proper maps)
+// 	return (DEFAULT_TEXTURE_INDEX);
+// }
+
+/* Textures changing with the player angle */
+// int determine_texture_index(t_game *game, int map_x, int map_y, float ray_angle)
+// {
+// 	// Check if ray is going up or down (north or south)
+// 	if (ray_angle >= PI && ray_angle < 2 * PI)
+// 	{
+// 		if (map_y < game->map_height - 1 && game->map[map_y + 1][map_x] == '0')
+// 		{
+// 			if (TEXTURE_DEBUG)
+// 				printf("[TEXTURE_DEBUG] Texture south\n");
+// 			return (SOUTH_WALL_TEXTURE_INDEX);
+// 		}
+// 	}
+// 	else if (ray_angle >= 0 && ray_angle < PI)
+// 	{
+// 		if (map_y > 0 && game->map[map_y - 1][map_x] == '0')
+// 		{
+// 			if (TEXTURE_DEBUG)
+// 				printf("[TEXTURE_DEBUG] Texture north\n");
+// 			return (NORTH_WALL_TEXTURE_INDEX);
+// 		}
+// 	}
+// 	if (ray_angle >= PI / 2 && ray_angle < 3 * PI / 2)
+// 	{
+// 		if (map_x > 0 && game->map[map_y][map_x - 1] == '0')
+// 		{
+// 			if (TEXTURE_DEBUG)
+// 				printf("[TEXTURE_DEBUG] Texture west\n");
+// 			return (WEST_WALL_TEXTURE_INDEX);
+// 		}
+// 	}
+// 	else if (ray_angle <PI / 2 || ray_angle >= 3 * PI / 2)
+// 	{
+// 		if (map_x < game->map_width - 1 && game->map[map_y][map_x + 1] == '0')
+// 		{
+// 			if (TEXTURE_DEBUG)
+// 				printf("[TEXTURE_DEBUG] Texture east\n");
+// 			return (EAST_WALL_TEXTURE_INDEX);
+// 		}
+// 	}
+// 	return (DEFAULT_TEXTURE_INDEX);
+// }
+
+int determine_texture_index(t_game *game, int map_x, int map_y)
 {
-	// Check the top neighbor
-	if (map_y > 0 && game->map[map_y - 1][map_x] == '0')
-		return (0); // north
-	// Check the bottom neighbor
-	else if (map_y < game->map_height - 1 && game->map[map_y + 1][map_x] == '0')
-		return (1); // south
-	// Check the left neighbor
-	else if (map_x > 0 && game->map[map_y][map_x - 1] == '0')
-		return (2); // west (left)
-	// Check the right neighbor
-	else if (map_x < game->map_width - 1 && game->map[map_y][map_x + 1] == '0')
-		return (3); // east (right)
-	// Default: if the wall is completely surrounded (should not happen with proper maps)
-	return (0);
+
+	if (map_y > 0 && game->map[map_y - 1][map_x] == '0') 
+	{
+		if (TEXTURE_DEBUG)
+			printf("[TEXTURE_DEBUG] Texture south-facing wall (north side)\n");
+		return (NORTH_WALL_TEXTURE_INDEX);
+	}
+	else if (map_y < game->map_height - 1 && game->map[map_y + 1][map_x] == '0') 
+	{
+		if (TEXTURE_DEBUG)
+			printf("[TEXTURE_DEBUG] Texture north-facing wall (south side)\n");
+		return (SOUTH_WALL_TEXTURE_INDEX);
+	}
+	else if (map_x > 0 && game->map[map_y][map_x - 1] == '0') 
+	{
+		if (TEXTURE_DEBUG)
+			printf("[TEXTURE_DEBUG] Texture east-facing wall (west side)\n");
+		return (WEST_WALL_TEXTURE_INDEX);
+	}
+	else if (map_x < game->map_width - 1 && game->map[map_y][map_x + 1] == '0') 
+	{
+		if (TEXTURE_DEBUG)
+			printf("[TEXTURE_DEBUG] Texture west-facing wall (east side)\n");
+		return (EAST_WALL_TEXTURE_INDEX);
+	}
+	return (DEFAULT_TEXTURE_INDEX);
 }
+
+
+/* Approach with outer wall */
+// int find_outer_wall_texture(t_game *game, int map_x, int map_y)
+// {
+//     // Scan left (west) for an outer wall
+//     for (int x = map_x - 1; x >= 0; x--)
+//     {
+//         if (game->map[map_y][x] == '1')  // Found a wall
+//             return determine_texture_index(game, x, map_y); // Get its texture
+//     }
+
+//     // Scan up (north) for an outer wall
+//     for (int y = map_y - 1; y >= 0; y--)
+//     {
+//         if (game->map[y][map_x] == '1')  // Found a wall
+//             return determine_texture_index(game, map_x, y); // Get its texture
+//     }
+
+//     return DEFAULT_TEXTURE_INDEX; // Should never happen in a closed map
+// }
+
+// int determine_texture_index(t_game *game, int map_x, int map_y)
+// {
+//     if (map_y > 0 && game->map[map_y - 1][map_x] == '0') 
+//     {
+//         if (TEXTURE_DEBUG)
+//             printf("[TEXTURE_DEBUG] Texture south-facing wall (north side)\n");
+//         return (NORTH_WALL_TEXTURE_INDEX);
+//     }
+//     else if (map_y < game->map_height - 1 && game->map[map_y + 1][map_x] == '0') 
+//     {
+//         if (TEXTURE_DEBUG)
+//             printf("[TEXTURE_DEBUG] Texture north-facing wall (south side)\n");
+//         return (SOUTH_WALL_TEXTURE_INDEX);
+//     }
+//     else if (map_x > 0 && game->map[map_y][map_x - 1] == '0') 
+//     {
+//         if (TEXTURE_DEBUG)
+//             printf("[TEXTURE_DEBUG] Texture east-facing wall (west side)\n");
+//         return (WEST_WALL_TEXTURE_INDEX);
+//     }
+//     else if (map_x < game->map_width - 1 && game->map[map_y][map_x + 1] == '0') 
+//     {
+//         if (TEXTURE_DEBUG)
+//             printf("[TEXTURE_DEBUG] Texture west-facing wall (east side)\n");
+//         return (EAST_WALL_TEXTURE_INDEX);
+//     }
+
+//     // If it's an enclosed wall, find the nearest outer wall and invert its texture
+//     int outer_texture = find_outer_wall_texture(game, map_x, map_y);
+//     if (outer_texture == NORTH_WALL_TEXTURE_INDEX) return SOUTH_WALL_TEXTURE_INDEX;
+//     if (outer_texture == SOUTH_WALL_TEXTURE_INDEX) return NORTH_WALL_TEXTURE_INDEX;
+//     if (outer_texture == EAST_WALL_TEXTURE_INDEX) return WEST_WALL_TEXTURE_INDEX;
+//     if (outer_texture == WEST_WALL_TEXTURE_INDEX) return EAST_WALL_TEXTURE_INDEX;
+
+//     return DEFAULT_TEXTURE_INDEX;
+// }
+
 
 /// @brief Main drawing loop that updates the game screen.
 /// @param game A pointer to the game structure.
@@ -134,23 +296,40 @@ int	draw_loop(t_game *game)
 	clear_image(game);
 	if (DEBUG)
 	{
-		draw_square(player->x, player->y, 10, 0x00FF00, game);
+		//Debug print
+		printf("[DEBUG] Entering debug mode\n");
+		debug_draw_square(player->x, player->y, 10, 0x00FF00, game);
 		draw_map(game);
 	}
-	// Calculate the angle increment for each ray
-	fraction = PI / 3 / WIDTH;
-	// Calculate the starting angle for the first ray
-	start_x = player->angle - PI / 6;
-	// Loop through each vertical stripe on the screen
-	i = 0;
-	while (i < WIDTH)
+	else
 	{
-		// Cast a ray and draw the corresponding vertical stripe
-		draw_line(player, game, start_x, i);
-		// Increment the angle for the next ray
-		start_x += fraction;
-		// Move to the next vertical stripe
-		i++;
+		//Debug print
+		//printf("[DEBUG] Entering normal mode\n");
+		// Calculate the angle increment for each ray
+		fraction = PI / 3 / WIDTH;
+		// Calculate the starting angle for the first ray
+		start_x = player->angle - PI / 6;	
+		// Loop through each vertical stripe on the screen
+		i = 0;
+		while (i < WIDTH)
+		{
+			if (DEBUG)
+			{
+				// Debug print
+				printf("[DEBUG] Casting ray in debug mode\n");
+				// Cast a ray and draw the corresponding vertical stripe in debug mode
+				debug_draw_line(player, game, start_x, i);
+			}
+			else
+			{
+				// Cast a ray and draw the corresponding vertical stripe
+				draw_line(player, game, start_x, i);
+			}
+			// Increment the angle for the next ray
+			start_x += fraction;
+			// Move to the next vertical stripe
+			i++;
+		}
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	return (0);
