@@ -11,12 +11,12 @@ char	**get_map(void)
 		map = malloc(sizeof(char *) * 11);
 		map[0] = "111111111111111";
 		map[1] = "100000000000001";
-		map[2] = "100000000000001";
-		map[3] = "100000110000001";
-		map[4] = "100000100000001";
+		map[2] = "100100000000001";
+		map[3] = "100000000000001";
+		map[4] = "100000000000001";
 		map[5] = "100000010000001";
-		map[6] = "100001000000001";
-		map[7] = "100000000000001";
+		map[6] = "100000000000001";
+		map[7] = "100000000001101";
 		map[8] = "100000000000001";
 		map[9] = "111111111111111";
 		map[10] = NULL;
@@ -50,13 +50,13 @@ void	init_game(t_game *game)
 	game->floor_b = 50;
 
 	// Load textures
-	game->texture_img[0] = mlx_xpm_file_to_image(game->mlx, "./textures/coal.xpm", &game->texture_width[0], &game->texture_height[0]);
+	game->texture_img[0] = mlx_xpm_file_to_image(game->mlx, "./textures/n.xpm", &game->texture_width[0], &game->texture_height[0]);
 	game->texture_data[0] = mlx_get_data_addr(game->texture_img[0], &game->texture_bpp[0], &game->texture_size_line[0], &game->texture_endian[0]);
-	game->texture_img[1] = mlx_xpm_file_to_image(game->mlx, "./textures/mud.xpm", &game->texture_width[1], &game->texture_height[1]);
+	game->texture_img[1] = mlx_xpm_file_to_image(game->mlx, "./textures/s.xpm", &game->texture_width[1], &game->texture_height[1]);
 	game->texture_data[1] = mlx_get_data_addr(game->texture_img[1], &game->texture_bpp[1], &game->texture_size_line[1], &game->texture_endian[1]);
-	game->texture_img[2] = mlx_xpm_file_to_image(game->mlx, "./textures/planks.xpm", &game->texture_width[2], &game->texture_height[2]);
+	game->texture_img[2] = mlx_xpm_file_to_image(game->mlx, "./textures/e.xpm", &game->texture_width[2], &game->texture_height[2]);
 	game->texture_data[2] = mlx_get_data_addr(game->texture_img[2], &game->texture_bpp[2], &game->texture_size_line[2], &game->texture_endian[2]);
-	game->texture_img[3] = mlx_xpm_file_to_image(game->mlx, "./textures/redbrick.xpm", &game->texture_width[3], &game->texture_height[3]);
+	game->texture_img[3] = mlx_xpm_file_to_image(game->mlx, "./textures/w.xpm", &game->texture_width[3], &game->texture_height[3]);
 	game->texture_data[3] = mlx_get_data_addr(game->texture_img[3], &game->texture_bpp[3], &game->texture_size_line[3], &game->texture_endian[3]);
 
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
@@ -93,11 +93,10 @@ int	main(int argc, char **argv)
 		return (0);
 	ft_printf("It passed!\n");
 	init_game(&game);
-	mlx_hook(game.win, 2, 1L << 0, key_press, &game.player);
-	mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
+	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
+	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_loop_hook(game.mlx, draw_loop, &game);
-	// mlx_hook(game.win, handle_key, &game); //Bugs the movement
 	mlx_loop(game.mlx);
 	return (0);
 }

@@ -5,17 +5,25 @@
 # define WIDTH 1280
 # define HEIGHT 720
 # define BLOCK 64
+
 //Variables for debbuging
 # define DEBUG 0
 # define BypassParse 1
-# define TEXTURE_DEBUG 1
-//end of it
+# define TEXTURE_DEBUG 0
+# define MAPCOLOR 0x0000FF;
 
-# define NORTH_WALL_TEXTURE_INDEX 0
-# define SOUTH_WALL_TEXTURE_INDEX 1
-# define WEST_WALL_TEXTURE_INDEX 2
-# define EAST_WALL_TEXTURE_INDEX 3
+//Defines for textures index
+# define NORTH_WALL_T_I 0
+# define SOUTH_WALL_T_I 1
+# define WEST_WALL_T_I 2
+# define EAST_WALL_T_I 3
 # define DEFAULT_TEXTURE_INDEX 0
+
+//Defines for textures debugs
+# define DebugSWall "[TEXTURE_DEBUG] Texture south-facing wall (north side)\n"
+# define DebugNWall "[TEXTURE_DEBUG] Texture north-facing wall (south side)\n"
+# define DebugWWall "[TEXTURE_DEBUG] Texture west-facing wall (east side)\n"
+# define DebugEWall "[TEXTURE_DEBUG] Texture east-facing wall (west side)\n"
 
 //Defines for keypress
 # define W 119
@@ -26,6 +34,7 @@
 # define RIGHT 65363
 # define KEY_E 101
 # define KEY_Q 113
+# define ESC 65307
 
 # define PI 3.14159265359
 
@@ -35,6 +44,96 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+
+/// @brief Enum to represent the side of the wall hit by the ray.
+typedef enum
+{
+	HIT_NORTH,
+	HIT_SOUTH,
+	HIT_EAST,
+	HIT_WEST,
+	HIT_NONE
+} t_hit_side;
+
+/// @brief Structure to hold parameters for drawing druing debug.
+typedef struct s_draw_params
+{
+	int x;
+	int y;
+	int size;
+	int color;
+} t_draw_params;
+
+/// @brief Structure to hold square information during debug.
+typedef struct s_square
+{
+	int x;
+	int y;
+	int size;
+	float angle;
+	int color;
+}	t_square;
+
+/// @brief Structure to hold texture state information.
+typedef struct s_texture_state
+{
+	t_hit_side previous_hit_side;
+	int consecutive_wall_count;
+	int previous_texture_index;
+	int previous_map_x;
+	int previous_map_y;
+} t_texture_state;
+
+/// @brief Structure to hold coordinates.
+typedef struct s_coords
+{
+	float x1;
+	float y1;
+	float x2;
+	float y2;
+} t_coords;
+
+/// @brief Structure to hold variables for drawing.
+typedef struct s_draw_vars
+{
+	int map_x;
+	int map_y;
+	int texture_index;
+	int tex_x;
+	int ceiling_color;
+	int floor_color;
+	int y;
+} t_draw_vars;
+
+/// @brief Structure to hold information about a wall slice.
+typedef struct s_wall_slice
+{
+	int start_y;
+	int end_y;
+	float perp_dist;
+	float line_height;
+} t_wall_slice;
+
+/// @brief Structure to hold information about the hit of the ray.
+typedef struct s_hit_info
+{
+	float hit_x;
+	float hit_y;
+	t_hit_side hit_side;
+} t_hit_info;
+
+/// @brief Structure to hold ray information.
+typedef struct s_ray
+{
+	float cos_angle;
+	float sin_angle;
+	float ray_x;
+	float ray_y;
+	float delta_x;
+	float delta_y;
+	float cell_x;
+	float cell_y;
+} t_ray;
 
 typedef struct s_player
 {
@@ -78,6 +177,11 @@ typedef struct s_game
 	int floor_r;
 	int floor_g;
 	int floor_b;
+	t_ray ray;
+	t_hit_info hit_info;
+	t_wall_slice wall_slice;
+	t_coords coords;
+	t_texture_state texture_state;
 
 } t_game;
 
@@ -87,16 +191,39 @@ void	put_pixel(int x, int y, int color, t_game *game);
 void	put_texture_pixel(int x, int y, int tex_x, int tex_y, t_game *game, int texture_index);
 void	clear_image(t_game *game);
 float	distance(float x, float y);
-float	fixed_dist(float x1, float y1, float x2, float y2, t_game *game);
+float	fixed_dist(t_game *game);
 bool	touch(float px, float py, t_game *game);
 int		draw_loop(t_game *game);
-int		determine_texture_index(t_game *game, int map_x, int map_y);
-//int determine_texture_index(t_game *game, int map_x, int map_y, float ray_angle);
-void	draw_line(t_player *player, t_game *game, float start_x, int i);
+int		determine_texture_index(t_game *game, int map_x, int map_y, t_hit_side hit_side);
+void	draw_line(t_game *game, float ray_angle, int screen_x);
+
+//Draw_utils
+void	draw_ceiling(t_game *game, int screen_x, int start_y, int ceiling_color);
+void	draw_floor(t_game *game, int screen_x, int end_y, int floor_color);
+void	handle_debug_mode(t_game *game, t_player *player);
+void	handle_normal_mode(t_game *game, t_player *player);
+
+//Cast_ray
+void	cast_ray(t_game *game, float ray_angle);
+
 //Draw_debug
-void	debug_draw_line(t_player *player, t_game *game, float start_x, int i);
-void	debug_draw_square(int x, int y, int size, int color, t_game *game);
+void	debug_put_pixel(int x, int y, int color, t_game *game);
+void	debug_draw_line(t_player *player, t_game *game, float ray_angle);
+void	debug_draw_square(t_draw_params *params, t_game *game);
 void	draw_map(t_game *game);
+void	debug_draw_rotated_square(t_square *sq, t_game *game);
+//Debug_draw_utils
+void	draw_map(t_game *game);
+void	debug_draw_line_step(int *p1, int *step, int *error, int *d);
+void	debug_draw_line_help(int *p1, int *p2, int color, t_game *game);
+void	rotate_point(int *p, float angle, int *r);
+void	rotate_corners(int c[4][2], int r[4][2], t_square *sq);
+//Debug_draw_utils2
+void	draw_edges(int r[4][2], int color, t_game *game);
+void	debug_draw_rotated_square(t_square *sq, t_game *game);
+void	draw_horizontal_line(t_draw_params *params, int offset_y, t_game *game);
+void	draw_vertical_line(t_draw_params *params, int offset_x, t_game *game);
+
 
 //Parsing
 int		ft_check_path(char **tmp_map, int height);
@@ -137,9 +264,9 @@ int		main(int argc, char **argv);
 //Player
 bool	is_wall(float x, float y, t_game *game);
 void	init_player(t_player *player);
-int		key_press(int keycode, t_player *player);
-int		key_release(int keycode, t_player *player);
-void 	move_player(t_player *player, t_game *game);
+int		key_press(int keycode, t_game *game);
+int		key_release(int keycode, t_game *game);
+void	move_player(t_game *game);
 
 //Utils
 char	*ft_strdupn(const char *str1);

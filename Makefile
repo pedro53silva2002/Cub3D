@@ -8,7 +8,8 @@ LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 SRC =	src/main.c \
-		src/player.c \
+		src/player/player.c \
+		src/player/player_move.c \
 		src/frees.c \
 		src/utils.c \
 		src/parsing/parsing.c \
@@ -16,8 +17,13 @@ SRC =	src/main.c \
 		src/parsing/parsing_utils2.c \
 		src/parsing/parsing_utils3.c \
 		src/draw/draw.c \
+		src/draw/draw_utils.c \
 		src/draw/draw_line.c \
-		src/draw/debug_draw.c
+		src/draw/cast_ray.c \
+		src/draw/determine_texture.c \
+		src/draw/debug/debug_draw.c \
+		src/draw/debug/debug_draw_utils.c \
+		src/draw/debug/debug_draw_utils2.c
 OBJ_DIR = obj
 OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
@@ -32,8 +38,10 @@ $(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)/player
 	mkdir -p $(OBJ_DIR)/parsing
 	mkdir -p $(OBJ_DIR)/draw
+	mkdir -p $(OBJ_DIR)/draw/debug
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
 

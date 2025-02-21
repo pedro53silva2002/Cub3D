@@ -40,18 +40,14 @@ Maybe the problem is determining the wall facing direction. its better to unders
 {
 	Debug mode is fked! (What is the problem?)
 }
-changing - For Debug fix:
-void cast_ray(t_player *player, t_game *game, float ray_angle, float *hit_x, float *hit_y, int *side);
-int determine_texture_index(t_game *game, int map_x, int map_y, float ray_angle);
-draw_line
 
-walls
-	I think that the problem is that im determining the texture index based on the position of the blocks next to it, and not the direction each side of the wall is facing.
-
-	What if I do that in a different way?
-	Like each wall will have 4 sides, and each side its own texture...
-
-	I "draw a straight line" and check what is the texture beeing put on the outer wall, and the place the oposite one?
-
-	Talvez mudar o mapa, para uma struct que tenha os 4 lados de cada parede identificados?
+21/02
+{
+	Finalmente consegui meter a renderização dos lados das paredes a funcionar;
+	Tecla ESC já dá exit;
+	Organização dos ficheiros em pastas;
+	Modo debug está funcional;
+	Pastas "draw" e "palyer" estão normed!;
+	Ficam 3 conjuntos de 4 texturaas para testes.
+}
 ############Pferrei############
