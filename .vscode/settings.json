@@ -1,7 +1,14 @@
 {
+<<<<<<< HEAD
   "files.associations": {
     ".fantomasignore": "ignore",
     "game.h": "c",
     "sstream": "c"
   }
 }
+=======
+    "files.associations": {
+        "game.h": "c"
+    }
+}
+>>>>>>> origin/vafernan

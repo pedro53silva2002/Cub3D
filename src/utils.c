@@ -22,7 +22,7 @@ char	*ft_strdupn(const char *str1)
 
 int	ft_max_width(char **map)
 {
-	int	i;
+	int		i;
 	size_t	max;
 
 	i = -1;
