@@ -2,7 +2,7 @@
 
 /// @brief Generates a hardcoded map for the game.
 /// @return A pointer to the generated map array.
-char	**get_map(void)
+char	**get_map(char **argv)
 {
 	char	**map;
 
@@ -23,17 +23,17 @@ char	**get_map(void)
 	}
 	if (!BypassParse)
 	{
-		map = NULL;
+		map = ft_fill_design(argv);
 	}
 	return (map);
 }
 
 /// @brief Initializes the game structure, including the player, map, and graphics.
 /// @param game A pointer to the game structure to be initialized.
-void	init_game(t_game *game)
+void	init_game(t_game *game, char **argv)
 {
-	init_player(&game->player);
-	game->map = get_map();
+	game->map = get_map(argv);
+	init_player(&game->player, game->map);
 	game->map_width = 15; // Set the map width
 	game->map_height = 10; // Set the map height
 	game->mlx = mlx_init();
@@ -92,7 +92,7 @@ int	main(int argc, char **argv)
 	if (!ft_check(argc, argv))
 		return (0);
 	ft_printf("It passed!\n");
-	init_game(&game);
+	init_game(&game, argv);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
 	mlx_hook(game.win, 17, 0, close_window, &game);

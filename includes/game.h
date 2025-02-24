@@ -8,7 +8,7 @@
 
 //Variables for debbuging
 # define DEBUG 0
-# define BypassParse 1
+# define BypassParse 0
 # define TEXTURE_DEBUG 0
 # define MAPCOLOR 0x0000FF;
 
@@ -186,7 +186,7 @@ typedef struct s_game
 
 } t_game;
 
-void init_player(t_player *player);
+void	init_player(t_player *player, char **map);
 int key_release(int keycode, t_game *game);
 int key_press(int keycode, t_game *game);
 void move_player(t_game *game);
@@ -281,15 +281,15 @@ void	ft_free_map(char **map);
 void	ft_free_file(char *str, int fd);
 
 //Main
-char	**get_map(void);
-void	init_game(t_game *game);
+char	**get_map(char **argv);
+void	init_game(t_game *game, char **argv);
 int		close_window(t_game *game);
 int		handle_key(int key, t_game *game);
 int		main(int argc, char **argv);
 
 //Player
 bool	is_wall(float x, float y, t_game *game);
-void	init_player(t_player *player);
+//void	init_player(t_player *player);
 /* int		key_press(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
 void	move_player(t_game *game); */

@@ -20,10 +20,10 @@ bool	is_wall(float x, float y, t_game *game)
 
 /// @brief Initializes the player structure with default values.
 /// @param player A pointer to the player structure to be initialized.
-void	init_player(t_player *player)
+void	init_player(t_player *player, char **map)
 {
-	player->x = WIDTH / 2;
-	player->y = HEIGHT / 2;
+	player->x = ft_get_coor(map, 'x');
+	player->y = ft_get_coor(map, 'y');
 	player->angle = PI / 2;
 	player->key_up = false;
 	player->key_down = false;
