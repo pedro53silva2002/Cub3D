@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+#include <sys/stat.h>
 
 typedef struct s_player
 {

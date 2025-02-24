@@ -113,6 +113,7 @@ int ft_checkfile(char *file)
 	char *str;
 	char *filecpy;
 	int len;
+	struct stat path_stat;
 
 	str = ".cub";
 	len = ft_strlen(file);
@@ -122,6 +123,10 @@ int ft_checkfile(char *file)
 		free(filecpy);
 		return (0);
 	}
+	if (stat(file, &path_stat) != 0)
+        return 0;
+	if (S_ISDIR(path_stat.st_mode))
+		return 0;
 	free(filecpy);
 	return (1);
 }

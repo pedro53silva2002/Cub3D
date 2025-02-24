@@ -12,6 +12,8 @@ int ft_check_path(char **tmp_map, int height)
 	x = ft_get_coor(tmp_map, 'x');
 	y = ft_get_coor(tmp_map, 'y');
 	// ft_printf("Value: %d\n", ft_find_path(tmp_map,x ,y));
+	if (!x && !y)
+		return (ft_perror("Player not found."), 0);
 	if (!ft_check_unkchr(tmp_map))
 		return (ft_perror("Found an unknow character in the map."), 0);
 	if (!ft_check_holes(tmp_map, height))
