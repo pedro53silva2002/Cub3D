@@ -84,3 +84,27 @@ void	move_player(t_game *game)
 	move_forward_backward(game, cos_angle, sin_angle, speed);
 	move_left_right(game, cos_angle, sin_angle, speed);
 }
+
+/// @brief Gets the direction the playes is gonna be watching.
+/// @param map The map of the game
+/// @return Returns the direction of the player
+char	ft_get_dir(char **map)
+{
+	int		i;
+	int		j;
+	char	dir;
+
+	i = -1;
+	dir = 'o';
+	while (map[++i])
+	{
+		j = -1;
+		while (map[i][++j])
+		{
+			if (map[i][j] == 'S' || map[i][j] == 'N'
+					|| map[i][j] == 'E' || map[i][j] == 'W')
+				dir = map[i][j];
+		}
+	}
+	return (dir);
+}

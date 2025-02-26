@@ -2,9 +2,9 @@
 
 /// @brief Frees the map and double pointer chars
 /// @param map The map or a double pointer char
-void ft_free_map(char **map)
+void	ft_free_map(char **map)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (map)

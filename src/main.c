@@ -3,7 +3,7 @@
 /// @brief Closes the game window and exits the program.
 /// @param game A pointer to the game structure containing the window data.
 /// @return Always returns 0.
-int close_window(t_game *game)
+int	close_window(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->win);
 	exit(0);
@@ -14,7 +14,7 @@ int close_window(t_game *game)
 /// @param key The key code of the pressed key.
 /// @param game A pointer to the game structure.
 /// @return Always returns 0.
-int handle_key(int key, t_game *game)
+int	handle_key(int key, t_game *game)
 {
 	if (key == 65307)
 		close_window(game);
@@ -23,9 +23,9 @@ int handle_key(int key, t_game *game)
 
 /// @brief The main function that initializes the game and starts the main loop.
 /// @return Always returns 0.
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_game game;
+	t_game	game;
 
 	if (!ft_check(argc, argv))
 		return (0);

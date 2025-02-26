@@ -295,10 +295,14 @@ int		main(int argc, char **argv);
 //Init
 void	init_game(t_game *game, char **argv);
 char	**get_map(char **argv);
+char	*ft_get_wall_path(char **argv, char *side);
+void	ft_init_textures(t_game **game, char **argv);
+void	ft_init_textures2(t_game ***game);
 
 
 //Player
 bool	is_wall(float x, float y, t_game *game);
+char	ft_get_dir(char **map);
 //void	init_player(t_player *player);
 /* int		key_press(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);

@@ -49,8 +49,8 @@ int	ft_max_height(char **map)
 
 int	ft_strslen(char *str1)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = 0;
@@ -66,7 +66,7 @@ int	ft_strslen(char *str1)
 char	*ft_strsdup(char *str1)
 {
 	int		i;
-	int 	j;
+	int		j;
 	char	*dupstr;
 	int		len;
 
