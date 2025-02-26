@@ -138,6 +138,8 @@ typedef struct s_ray
 
 typedef struct s_player
 {
+	char	direction;
+
 	float x;
 	float y;
 	float angle;

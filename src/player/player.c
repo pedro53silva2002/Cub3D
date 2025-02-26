@@ -5,32 +5,69 @@
 /// @param y The y-coordinate of the point.
 /// @param game A pointer to the game structure containing the map data.
 /// @return True if the point is inside a wall, false otherwise.
-bool	is_wall(float x, float y, t_game *game)
+bool is_wall(float x, float y, t_game *game)
 {
-	int	map_x;
-	int	map_y;
+	int map_x;
+	int map_y;
 
 	map_x = (int)(x / BLOCK);
 	map_y = (int)(y / BLOCK);
-	if (map_x < 0 || map_x >= game->map_width || map_y < 0
-		|| map_y >= game->map_height)
+	if (map_x < 0 || map_x >= game->map_width || map_y < 0 || map_y >= game->map_height)
 		return (true);
 	return (game->map[map_y][map_x] == '1');
 }
 
+/// @brief Gets the direction the playes is gonna be watching.
+/// @param map The map of the game
+/// @return Returns the direction of the player
+char ft_get_dir(char **map)
+{
+	int i;
+	int j;
+	char dir;
+
+	i = -1;
+	dir = 'o';
+	while (map[++i])
+	{
+		j = -1;
+		while (map[i][++j])
+		{
+			if (map[i][j] == 'S' || map[i][j] == 'N' || map[i][j] == 'E'|| map[i][j] == 'W')
+				dir = map[i][j];
+		}
+	}
+	return (dir);
+}
+
+float	ft_get_ang(char dir)
+{
+	if (dir == 'N')
+		return (PI / 2);
+	else if (dir == 'E')
+		return (-PI);
+	else if (dir == 'W')
+		return (PI);
+	else if (dir == 'S')
+		return (PI * 1.5);
+	return (0);
+}
+
 /// @brief Initializes the player structure with default values.
 /// @param player A pointer to the player structure to be initialized.
-void	init_player(t_player *player, char **map)
+void init_player(t_player *player, char **map)
 {
+	player->direction = ft_get_dir(map);
 	player->x = ft_get_coor(map, 'x');
 	player->y = ft_get_coor(map, 'y');
-	player->angle = PI / 2;
+	player->angle = ft_get_ang(player->direction);
 	player->key_up = false;
 	player->key_down = false;
 	player->key_right = false;
 	player->key_left = false;
 	player->left_rotate = false;
 	player->right_rotate = false;
+	ft_printf("X: %d\tY: %d\nIdeal x: %d\tIdeal y: %d\n", player->x, player->y, ft_get_coor(map, 'x'), ft_get_coor(map, 'y'));
 }
 
 /// @brief Handles key press events and updates the player's movement
@@ -38,7 +75,7 @@ void	init_player(t_player *player, char **map)
 /// @param keycode The key code of the pressed key.
 /// @param player A pointer to the player structure.
 /// @return Always returns 0.
-int	key_press(int keycode, t_game *game)
+int key_press(int keycode, t_game *game)
 {
 	if (keycode == W)
 		game->player.key_up = true;
@@ -62,7 +99,7 @@ int	key_press(int keycode, t_game *game)
 /// @param keycode The key code of the released key.
 /// @param player A pointer to the player structure.
 /// @return Always returns 0.
-int	key_release(int keycode, t_game *game)
+int key_release(int keycode, t_game *game)
 {
 	if (keycode == W)
 		game->player.key_up = false;
