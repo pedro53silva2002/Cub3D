@@ -33,17 +33,27 @@ int	ft_check_img(char *str)
 {
 	char	**img;
 	char	*xpm;
+	char	*path;
+	int		fd;
 
 	img = ft_split(str, ' ');
 	xpm = ft_substr(str, ft_strlen(str) - 5, 4);
+	path = ft_substr(img[1], 0, ft_strclen(img[1], '\n'));
 	//ft_printf("FIRST\n");
 	if (!ft_strncmp(img[1], ".xpm", 4))
-		return (ft_free_map(img), free(xpm), 0);
+		return (ft_free_map(img), free(xpm), free(path), 0);
 	//ft_printf("Value: %s\t Bool: %d\n", img[1], ft_strcmp(img[1], ".xpm"));
 	if (ft_strcmp(xpm, ".xpm"))
-		return (ft_free_map(img), free(xpm), 0);
+		return (ft_free_map(img), free(xpm), free(path),0);
 	//ft_printf("THIRD\n");
-	return (ft_free_map(img), free(xpm), 1);
+	//ft_printf("Value: %s\n", path);
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+	{
+		//ft_printf("Error opening file: %s (errno: %d)\n", strerror(errno), errno);
+		return (ft_free_map(img), free(xpm),free(path), 0);
+	}
+	return (ft_free_map(img), free(xpm),free(path), 1);
 }
 
 /// @brief Checks colors, sides and the image path

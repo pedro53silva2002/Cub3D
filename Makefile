@@ -8,6 +8,7 @@ LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 SRC =	src/main.c \
+		src/init.c \
 		src/player/player.c \
 		src/player/player_move.c \
 		src/frees.c \

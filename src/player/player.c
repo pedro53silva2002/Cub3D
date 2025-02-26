@@ -58,8 +58,8 @@ float	ft_get_ang(char dir)
 void init_player(t_player *player, char **map)
 {
 	player->direction = ft_get_dir(map);
-	player->x = ft_get_coor(map, 'x');
-	player->y = ft_get_coor(map, 'y');
+	player->x = (ft_get_coor(map, 'x') * 64) + 32;
+	player->y = (ft_get_coor(map, 'y') * 64) + 32;
 	player->angle = ft_get_ang(player->direction);
 	player->key_up = false;
 	player->key_down = false;

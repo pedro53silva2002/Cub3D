@@ -2,8 +2,8 @@
 #define GAME_H
 
 //Defines fo window creation
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1080
 # define BLOCK 64
 
 //Variables for debbuging
@@ -45,6 +45,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include <sys/stat.h>
+#include <errno.h>
 
 /// @brief Enum to represent the side of the wall hit by the ray.
 typedef enum
@@ -185,7 +186,10 @@ typedef struct s_game
 	t_wall_slice wall_slice;
 	t_coords coords;
 	t_texture_state texture_state;
-
+	char *path_north;
+	char *path_south;
+	char *path_west;
+	char *path_east;
 } t_game;
 
 void	init_player(t_player *player, char **map);
@@ -284,10 +288,14 @@ void	ft_free_file(char *str, int fd);
 
 //Main
 char	**get_map(char **argv);
-void	init_game(t_game *game, char **argv);
 int		close_window(t_game *game);
 int		handle_key(int key, t_game *game);
 int		main(int argc, char **argv);
+
+//Init
+void	init_game(t_game *game, char **argv);
+char	**get_map(char **argv);
+
 
 //Player
 bool	is_wall(float x, float y, t_game *game);
@@ -299,4 +307,8 @@ void	move_player(t_game *game); */
 //Utils
 char	*ft_strdupn(const char *str1);
 int		ft_max_width(char **map);
+int		ft_max_height(char **map);
+int	ft_strslen(char *str1);
+char	*ft_strsdup(char *str1);
+
 #endif
