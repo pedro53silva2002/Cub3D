@@ -86,5 +86,6 @@ char	*ft_strsdup(char *str1)
 		i++;
 	}
 	dupstr[i] = '\0';
+	free(str1);
 	return (dupstr);
 }

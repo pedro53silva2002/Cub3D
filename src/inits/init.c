@@ -43,14 +43,50 @@ char	*ft_get_wall_path(char **argv, char *side)
 	{
 		if (!ft_strncmp(str, side, 2))
 		{
+
 			lines = ft_split(str, ' ');
 			path = ft_substr(lines[1], 0, ft_strclen(lines[1], '\n'));
-			return (ft_free_map(lines), path);
+			ft_free_map(lines);
+			free(str);
+			ft_free_fd(fd);
+			return (path);
 		}
+		free(str);
 		str = get_next_line(fd);
 	}
+	close(fd);
 	return (NULL);
 }
+
+/* Leaky */
+// int	ft_get_color(char **argv, char side, int pricol)
+// {
+// 	int		fd;
+// 	char	*str;
+// 	char	**lines;
+// 	char	**rgb;
+// 	int		color;
+
+// 	color = 0;
+// 	lines = NULL;
+// 	rgb = NULL;
+// 	fd = open(argv[1], O_RDONLY);
+// 	str = get_next_line(fd);
+// 	while (str)
+// 	{
+// 		if (str[0] == side)
+// 		{
+// 			str = ft_strsdup(str);
+// 			lines = ft_split(str, ' ');
+// 			rgb = ft_split(lines[1], ',');
+// 			color = ft_atoi(rgb[pricol]);
+// 			return (free(str), ft_free_map(lines), ft_free_map(rgb), color);
+// 		}
+// 		free(str);
+// 		str = get_next_line(fd);
+// 	}
+// 	return (color);
+// }
 
 int	ft_get_color(char **argv, char side, int pricol)
 {
@@ -73,10 +109,16 @@ int	ft_get_color(char **argv, char side, int pricol)
 			lines = ft_split(str, ' ');
 			rgb = ft_split(lines[1], ',');
 			color = ft_atoi(rgb[pricol]);
-			return (ft_free_map(lines), ft_free_map(rgb), color);
+			ft_free_map(lines);
+			ft_free_map(rgb);
+			free(str);
+			ft_free_fd(fd);
+			return (color);
 		}
+		free(str);
 		str = get_next_line(fd);
 	}
+	close(fd);
 	return (color);
 }
 
@@ -104,4 +146,9 @@ void	init_game(t_game *game, char **argv)
 	game->floor_b = ft_get_color(argv, 'F', 2);
 	ft_init_textures(&game, argv);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	game->texture_state.previous_hit_side = -1;
+	game->texture_state.previous_map_x = -1;
+	game->texture_state.previous_map_y = -1;
+	game->texture_state.consecutive_wall_count = 0;
+	game->texture_state.previous_texture_index = DEFAULT_TEXTURE_INDEX;
 }

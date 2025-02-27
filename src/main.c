@@ -5,7 +5,29 @@
 /// @return Always returns 0.
 int	close_window(t_game *game)
 {
-	mlx_destroy_window(game->mlx, game->win);
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (game->texture_img[i])
+			mlx_destroy_image(game->mlx, game->texture_img[i]);
+		i++;
+	}
+	free(game->path_north);
+	free(game->path_south);
+	free(game->path_west);
+	free(game->path_east);
+	ft_free_map(game->map);
+	if (game->img)
+		mlx_destroy_image(game->mlx, game->img);
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
 	exit(0);
 	return (0);
 }
