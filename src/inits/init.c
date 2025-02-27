@@ -58,36 +58,6 @@ char	*ft_get_wall_path(char **argv, char *side)
 	return (NULL);
 }
 
-/* Leaky */
-// int	ft_get_color(char **argv, char side, int pricol)
-// {
-// 	int		fd;
-// 	char	*str;
-// 	char	**lines;
-// 	char	**rgb;
-// 	int		color;
-
-// 	color = 0;
-// 	lines = NULL;
-// 	rgb = NULL;
-// 	fd = open(argv[1], O_RDONLY);
-// 	str = get_next_line(fd);
-// 	while (str)
-// 	{
-// 		if (str[0] == side)
-// 		{
-// 			str = ft_strsdup(str);
-// 			lines = ft_split(str, ' ');
-// 			rgb = ft_split(lines[1], ',');
-// 			color = ft_atoi(rgb[pricol]);
-// 			return (free(str), ft_free_map(lines), ft_free_map(rgb), color);
-// 		}
-// 		free(str);
-// 		str = get_next_line(fd);
-// 	}
-// 	return (color);
-// }
-
 int	ft_get_color(char **argv, char side, int pricol)
 {
 	int		fd;
@@ -97,8 +67,6 @@ int	ft_get_color(char **argv, char side, int pricol)
 	int		color;
 
 	color = 0;
-	lines = NULL;
-	rgb = NULL;
 	fd = open(argv[1], O_RDONLY);
 	str = get_next_line(fd);
 	while (str)
@@ -110,16 +78,12 @@ int	ft_get_color(char **argv, char side, int pricol)
 			rgb = ft_split(lines[1], ',');
 			color = ft_atoi(rgb[pricol]);
 			ft_free_map(lines);
-			ft_free_map(rgb);
-			free(str);
-			ft_free_fd(fd);
-			return (color);
+			return (ft_free_map(rgb), free(str), ft_free_fd(fd), color);
 		}
 		free(str);
 		str = get_next_line(fd);
 	}
-	close(fd);
-	return (color);
+	return (close(fd), color);
 }
 
 /// @brief Initializes the game structure, 
@@ -131,7 +95,6 @@ void	init_game(t_game *game, char **argv)
 	init_player(&game->player, game->map);
 	game->map_width = ft_max_width(game->map);
 	game->map_height = ft_max_height(game->map);
-	ft_printf("W: %d\tH: %d\n", game->map_width, game->map_height);
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT,
 			"cub3D");

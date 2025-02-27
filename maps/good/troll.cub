@@ -1,7 +1,7 @@
-NO textures/game/wall_north.xpm
-SO textures/game/wall_south.xpm
-WE textures/game/wall_west.xpm
-EA textures/game/wall_east.xpm
+NO textures/n.xpm
+SO textures/s.xpm
+WE textures/w.xpm
+EA textures/e.xpm
 
 E1 textures/what128.xpm
 E2 textures/what128.xpm
