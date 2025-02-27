@@ -51,20 +51,18 @@ bool	touch(float px, float py, t_game *game)
 	return (false);
 }
 
-
 void	handle_debug_mode(t_game *game, t_player *player)
 {
-	float	fov;
-	float	angle_increment;
-	float	start_angle;
-	int		i;
-	t_square square;
+	float		fov;
+	float		angle_increment;
+	float		start_angle;
+	int			i;
+	t_square	square;
 
 	square.x = player->x;
 	square.y = player->y;
 	square.size = 10;
 	square.angle = player->angle;
-	//debug_draw_rotated_square(player->x, player->y, 10, 0x00FF00, game, player->angle);
 	debug_draw_rotated_square(&square, game);
 	draw_map(game);
 	fov = PI / 3;

@@ -2,13 +2,13 @@
 #define GAME_H
 
 //Defines fo window creation
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1080
 # define BLOCK 64
 
 //Variables for debbuging
 # define DEBUG 0
-# define BypassParse 1
+# define BypassParse 0
 # define TEXTURE_DEBUG 0
 # define MAPCOLOR 0x0000FF;
 
@@ -44,6 +44,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 /// @brief Enum to represent the side of the wall hit by the ray.
 typedef enum
@@ -137,6 +139,8 @@ typedef struct s_ray
 
 typedef struct s_player
 {
+	char	direction;
+
 	float x;
 	float y;
 	float angle;
@@ -182,8 +186,36 @@ typedef struct s_game
 	t_wall_slice wall_slice;
 	t_coords coords;
 	t_texture_state texture_state;
-
+	char *path_north;
+	char *path_south;
+	char *path_west;
+	char *path_east;
 } t_game;
+
+void	init_player(t_player *player, char **map);
+int key_release(int keycode, t_game *game);
+int key_press(int keycode, t_game *game);
+void move_player(t_game *game);
+int	ft_check(int argc, char **argv);
+void	ft_free_map(char	**map);
+char	*ft_strdupn(const char *str1);
+int	ft_max_width(char **map);
+int ft_check_borders_horizontal(char **tmp_map, int height);
+int ft_check_borders_vertical(char **tmp_map, int height);
+char **ft_fill_design(char **argv);
+int ft_rowlen(char *file);
+int ft_checkfile(char *file);
+void	ft_free_file(char *str, int fd);
+int ft_has_sides_and_colors(int *colors, int *sides);
+int	ft_check_img(char *str);
+void ft_see_assets(int **colors, int **sides, char *str);
+int ft_check_colors(char *str);
+int ft_find_path(char **map, int x, int y);
+int ft_check_borders(char **tmp_map, int height);
+int ft_has_hole(char **map, int x, int y, int height);
+int ft_check_holes(char **map, int height);
+int ft_get_coor(char **tmp_map, char c);
+int ft_check_unkchr(char **map);
 
 // Function declarations
 //Draw
@@ -255,20 +287,33 @@ void	ft_free_map(char **map);
 void	ft_free_file(char *str, int fd);
 
 //Main
-char	**get_map(void);
-void	init_game(t_game *game);
+char	**get_map(char **argv);
 int		close_window(t_game *game);
 int		handle_key(int key, t_game *game);
 int		main(int argc, char **argv);
+void	free_map(char **map);
+
+//Init
+void	init_game(t_game *game, char **argv);
+char	**get_map(char **argv);
+char	*ft_get_wall_path(char **argv, char *side);
+void	ft_init_textures(t_game **game, char **argv);
+void	ft_init_textures2(t_game ***game);
+
 
 //Player
 bool	is_wall(float x, float y, t_game *game);
-void	init_player(t_player *player);
-int		key_press(int keycode, t_game *game);
+char	ft_get_dir(char **map);
+//void	init_player(t_player *player);
+/* int		key_press(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
-void	move_player(t_game *game);
+void	move_player(t_game *game); */
 
 //Utils
 char	*ft_strdupn(const char *str1);
 int		ft_max_width(char **map);
+int		ft_max_height(char **map);
+int	ft_strslen(char *str1);
+char	*ft_strsdup(char *str1);
+
 #endif

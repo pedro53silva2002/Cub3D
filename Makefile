@@ -8,6 +8,8 @@ LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 SRC =	src/main.c \
+		src/inits/init.c \
+		src/inits/init_utils.c \
 		src/player/player.c \
 		src/player/player_move.c \
 		src/frees.c \
@@ -38,6 +40,7 @@ $(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)/inits
 	mkdir -p $(OBJ_DIR)/player
 	mkdir -p $(OBJ_DIR)/parsing
 	mkdir -p $(OBJ_DIR)/draw
@@ -57,8 +60,9 @@ fclean: clean
 
 re: fclean all
 
+
 valgrind: 
-	/usr/bin/valgrind --leak-check=full -s --show-leak-kinds=all ./$(NAME) ./maps/good/hard_good.cub
+	/usr/bin/valgrind --leak-check=full -s --show-leak-kinds=all ./$(NAME) ./maps/good/game.cub
 
 download:
 	@wget https://cdn.intra.42.fr/document/document/27195/minilibx-linux.tgz

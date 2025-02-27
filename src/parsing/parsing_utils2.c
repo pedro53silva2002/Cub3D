@@ -8,8 +8,6 @@ int	ft_has_sides_and_colors(int *colors, int *sides)
 {
 	int	i;
 
-	(void)colors;
-	// ft_printf("NO: %d\tSO: %d\tWE: %d\tEA: %d\nF: %d\tC: %d\n", sides[0],sides[1],sides[2],sides[3], colors[0],colors[1]);
 	i = -1;
 	while (++i <= 1)
 	{
@@ -19,7 +17,6 @@ int	ft_has_sides_and_colors(int *colors, int *sides)
 	i = -1;
 	while (++i <= 3)
 	{
-		// ft_printf("Value: %d\n", sides[1]);
 		if (!sides[i] || sides[i] != 1)
 			return (0);
 	}
@@ -33,17 +30,22 @@ int	ft_check_img(char *str)
 {
 	char	**img;
 	char	*xpm;
+	char	*path;
+	int		fd;
 
 	img = ft_split(str, ' ');
 	xpm = ft_substr(str, ft_strlen(str) - 5, 4);
-	//ft_printf("FIRST\n");
+	path = ft_substr(img[1], 0, ft_strclen(img[1], '\n'));
 	if (!ft_strncmp(img[1], ".xpm", 4))
-		return (ft_free_map(img), free(xpm), 0);
-	//ft_printf("Value: %s\t Bool: %d\n", img[1], ft_strcmp(img[1], ".xpm"));
+		return (ft_free_map(img), free(xpm), free(path), 0);
 	if (ft_strcmp(xpm, ".xpm"))
-		return (ft_free_map(img), free(xpm), 0);
-	//ft_printf("THIRD\n");
-	return (ft_free_map(img), free(xpm), 1);
+		return (ft_free_map(img), free(xpm), free(path), 0);
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+	{
+		return (ft_free_map(img), free(xpm), free(path), 0);
+	}
+	return (ft_free_map(img), free(xpm), free(path), 1);
 }
 
 /// @brief Checks colors, sides and the image path
@@ -98,16 +100,17 @@ int	ft_check_colors(char *str)
 	return (1);
 }
 
-/// @brief Checks if the player has a good path (while the game doesn't have a end it doesn't do much)
+/// @brief Checks if the player has a good path
+/// (while the game doesn't have a end it doesn't do much)
 /// @param map The map
 /// @param x X coordinates
 /// @param y Y coordinates
-/// @return Returns 0 if it doesn't found nothing wrong and returns 1 if it founds something wrong
+/// @return Returns 0 if it doesn't found nothing 
+/// wrong and returns 1 if it founds something wrong
 int	ft_find_path(char **map, int x, int y)
 {
 	static int	change;
 
-	// ft_printf("POINT: %d\tCoor: %d/%d\n", change, x, y);
 	if (change)
 		return (1);
 	if (!map[y][x])

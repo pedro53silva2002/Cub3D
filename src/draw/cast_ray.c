@@ -16,7 +16,8 @@ void	perform_ray_casting(t_game *game)
 	{
 		game->ray.ray_x += game->ray.delta_x;
 		game->ray.ray_y += game->ray.delta_y;
-		if (game->ray.ray_x < 0 || game->ray.ray_x >= game->map_width * BLOCK
+		if (game->ray.ray_x < 0
+			|| game->ray.ray_x >= game->map_width * BLOCK
 			|| game->ray.ray_y < 0
 			|| game->ray.ray_y >= game->map_height * BLOCK)
 		{

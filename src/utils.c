@@ -34,3 +34,57 @@ int	ft_max_width(char **map)
 	}
 	return (max);
 }
+
+int	ft_max_height(char **map)
+{
+	int		i;
+
+	i = 0;
+	while (map[i])
+	{
+		i++;
+	}
+	return (i);
+}
+
+int	ft_strslen(char *str1)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (str1[i])
+	{
+		if (str1[i] != ' ')
+			len++;
+		i++;
+	}
+	return (len);
+}
+
+char	*ft_strsdup(char *str1)
+{
+	int		i;
+	int		j;
+	char	*dupstr;
+	int		len;
+
+	j = 0;
+	len = ft_strslen(str1);
+	dupstr = malloc((len + 2) * sizeof(char));
+	if (dupstr == NULL)
+		return (NULL);
+	i = 0;
+	while (str1[i] != '\0')
+	{
+		if (str1[i] != ' ' || (str1[i] == ' ' && i == 1))
+		{
+			dupstr[j] = str1[i];
+			j++;
+		}
+		i++;
+	}
+	dupstr[i] = '\0';
+	return (dupstr);
+}
