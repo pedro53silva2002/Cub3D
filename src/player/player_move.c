@@ -4,7 +4,7 @@ void	rotate_player(t_game *game)
 {
 	float	angle_speed;
 
-	angle_speed = 0.07;
+	angle_speed = 0.05;
 	if (game->player.left_rotate)
 		game->player.angle -= angle_speed;
 	if (game->player.right_rotate)

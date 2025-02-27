@@ -285,13 +285,21 @@ int		ft_check_unkchr(char **map);
 //Frees
 void	ft_free_map(char **map);
 void	ft_free_file(char *str, int fd);
+void	ft_free_fd(int fd);
 
 //Main
 char	**get_map(char **argv);
 int		close_window(t_game *game);
 int		handle_key(int key, t_game *game);
 int		main(int argc, char **argv);
-void	free_map(char **map);
+
+//Init
+void	init_game(t_game *game, char **argv);
+char	**get_map(char **argv);
+char	*ft_get_wall_path(char **argv, char *side);
+void	ft_init_textures(t_game **game, char **argv);
+void	ft_init_textures2(t_game ***game);
+
 
 //Init
 void	init_game(t_game *game, char **argv);

@@ -29,3 +29,16 @@ void	ft_free_file(char *str, int fd)
 	}
 	close(fd);
 }
+
+void	ft_free_fd(int fd)
+{
+	char	*str;
+
+	str = get_next_line(fd);
+	while (str)
+	{
+		free(str);
+		str = get_next_line(fd);
+	}
+	close(fd);
+}

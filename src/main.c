@@ -1,17 +1,5 @@
 #include "../includes/game.h"
 
-void	free_map(char **map)
-{
-	int i = 0;
-
-	while (map[i])
-	{
-		free(map[i]);
-		i++;
-	}
-	free(map);
-}
-
 /// @brief Closes the game window and exits the program.
 /// @param game A pointer to the game structure containing the window data.
 /// @return Always returns 0.
@@ -30,7 +18,7 @@ int	close_window(t_game *game)
 	free(game->path_south);
 	free(game->path_west);
 	free(game->path_east);
-	free_map(game->map);
+	ft_free_map(game->map);
 	if (game->img)
 		mlx_destroy_image(game->mlx, game->img);
 	if (game->win)
@@ -63,7 +51,7 @@ int	main(int argc, char **argv)
 
 	if (!ft_check(argc, argv))
 		return (0);
-	ft_printf("It passed!\n");
+	ft_printf("Map passed!\n");
 	init_game(&game, argv);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
