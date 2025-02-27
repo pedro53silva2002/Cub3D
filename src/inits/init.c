@@ -41,9 +41,8 @@ char	*ft_get_wall_path(char **argv, char *side)
 	str = get_next_line(fd);
 	while (str)
 	{
-		if (!ft_strncmp(str, side, 2))
+		if (ft_strnstr(str, side, 1000))
 		{
-
 			lines = ft_split(str, ' ');
 			path = ft_substr(lines[1], 0, ft_strclen(lines[1], '\n'));
 			ft_free_map(lines);
@@ -54,8 +53,7 @@ char	*ft_get_wall_path(char **argv, char *side)
 		free(str);
 		str = get_next_line(fd);
 	}
-	close(fd);
-	return (NULL);
+	return (close(fd), NULL);
 }
 
 int	ft_get_color(char **argv, char side, int pricol)

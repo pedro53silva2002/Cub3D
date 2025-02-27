@@ -54,7 +54,7 @@ int	ft_check_assets(char **argv)
 	sides = ft_memset(sides, 0, sizeof(int) * 4);
 	fd = open(argv[1], O_RDONLY);
 	str = get_next_line(fd);
-	while (str && (str[0] != '1' && str[0] != '0' && str[0] != ' '))
+	while (str && (str[0] != '1' && str[0] != '0'))
 	{
 		if (! (str))
 			return (ft_free_file(str, fd), free(colors), free(sides), 0);

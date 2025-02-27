@@ -30,7 +30,6 @@ void	ft_free_file(char *str, int fd)
 	close(fd);
 }
 
-
 void	ft_free_fd(int fd)
 {
 	char	*str;

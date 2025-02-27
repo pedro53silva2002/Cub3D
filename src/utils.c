@@ -70,22 +70,24 @@ char	*ft_strsdup(char *str1)
 	char	*dupstr;
 	int		len;
 
-	j = 0;
+	j = -1;
 	len = ft_strslen(str1);
 	dupstr = malloc((len + 2) * sizeof(char));
 	if (dupstr == NULL)
 		return (NULL);
 	i = 0;
-	while (str1[i] != '\0')
-	{
-		if (str1[i] != ' ' || (str1[i] == ' ' && i == 1))
-		{
-			dupstr[j] = str1[i];
-			j++;
-		}
+	while (str1[i] == ' ')
 		i++;
+	i = i - 1;
+	while (str1[++i] != '\0')
+	{
+		if (str1[i] != ' ' || (str1[i] == ' '
+				&& i == 1) || (str1[i] == ' '
+				&& i == 2 && str1[i - 1] != ' '))
+		{
+			dupstr[++j] = str1[i];
+		}
 	}
-	dupstr[i] = '\0';
-	free(str1);
-	return (dupstr);
+	dupstr[j + 1] = '\0';
+	return (free(str1), dupstr);
 }

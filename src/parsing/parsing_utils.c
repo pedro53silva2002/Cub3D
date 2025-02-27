@@ -76,7 +76,7 @@ char	**ft_fill_design(char **argv)
 	str = get_next_line(fd);
 	while (str)
 	{
-		if ((str[0] == '1' || str[0] == '0' || str[0] == ' '))
+		if (ft_is_map(str))
 		{
 			map[i] = ft_strdupn(str);
 			i++;
