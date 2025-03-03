@@ -76,6 +76,13 @@ void	handle_debug_mode(t_game *game, t_player *player)
 	}
 }
 
+/// @brief Run the game in normal mode.
+/// @param game ptr to the game structure
+/// @param player ptr to the player structure
+/// fraction is the increment for each columm of the indow (60deg)
+/// fraction is the FOV
+/// start_x is the start angle of the FOV
+/// i is the index of the column
 void	handle_normal_mode(t_game *game, t_player *player)
 {
 	float	fraction;

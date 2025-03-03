@@ -16,12 +16,12 @@ void	get_wall_slice_dimension(t_game *game)
 		+ game->wall_slice.line_height;
 }
 
-/// @brief Determines the index of the texture to use for a wall.
-/// @param game Pointer to the game structure.
-/// @param map_x The x-coordinate of the wall in the map.
-/// @param map_y The y-coordinate of the wall in the map.
-/// @param hit_side The side of the wall that was hit.
-/// @return The index of the texture to use.
+/// @brief Determines the x-coordinate in the texture based on the hit point.
+/// @param game ptr to the game structure
+/// @param texture_index the index of the txture to be used
+/// @param hit_x coord of the hit point
+/// @param hit_y coord of the hit point
+/// @return Texture to be used
 int	calculate_texture_x(t_game *game, int texture_index, float hit_x,
 	float hit_y)
 {
@@ -39,31 +39,6 @@ int	calculate_texture_x(t_game *game, int texture_index, float hit_x,
 /// @param texture_index Index of the texture to use.
 /// @param tex_x The x-coordinate in the texture to sample.
 /// @param screen_x The x-coordinate on the screen where the stripe is drawn.
-// void	draw_vertical_stripe(t_game *game, int texture_index, int tex_x,
-// 	int screen_x)
-// {
-// 	int	tex_y;
-// 	int	color;
-// 	int	y;
-
-// 	y = game->wall_slice.start_y;
-// 	while (y < game->wall_slice.end_y)
-// 	{
-// 		tex_y = ((y - game->wall_slice.start_y)
-// 				* game->texture_height[texture_index]) / (game->wall_slice.end_y
-// 				- game->wall_slice.start_y);
-// 		if (tex_y < 0)
-// 			tex_y = 0;
-// 		else if (tex_y >= game->texture_height[texture_index])
-// 			tex_y = game->texture_height[texture_index] - 1;
-// 		color = *(int *)(game->texture_data[texture_index]
-// 				+ (tex_y * game->texture_size_line[texture_index]
-// 					+ tex_x * (game->texture_bpp[texture_index] / 8)));
-// 		put_pixel(screen_x, y, color, game);
-// 		y++;
-// 	}
-// }
-
 void	draw_vertical_stripe(t_game *game, int texture_index, int tex_x,
 	int screen_x)
 {

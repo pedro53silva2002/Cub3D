@@ -43,7 +43,10 @@ int	handle_key(int key, t_game *game)
 	return (0);
 }
 
-/// @brief The main function that initializes the game and starts the main loop.
+/// @brief The main function that initializes the game and starts the main loop
+/// ofr mlx_hook event type 2 KeyPress, 3 keyRelease, and 17 DestroyNotify.
+/// for mlx_hook masks 1L <<< 0 keyPressMask, 1L << 1 keyReleaseMask
+/// 0 DestroyNotifyMask.
 /// @return Always returns 0.
 int	main(int argc, char **argv)
 {

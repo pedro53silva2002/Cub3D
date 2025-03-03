@@ -1,5 +1,9 @@
 #include "../../includes/game.h"
 
+/// @brief Rotates the player
+/// if the player is rotating left, the angle is decreased
+/// if the player is rotating right, the angle is increased
+/// @param game ptr to the game structure
 void	rotate_player(t_game *game)
 {
 	float	angle_speed;
@@ -9,12 +13,14 @@ void	rotate_player(t_game *game)
 		game->player.angle -= angle_speed;
 	if (game->player.right_rotate)
 		game->player.angle += angle_speed;
-	if (game->player.angle > 2 * PI)
-		game->player.angle = 0;
-	if (game->player.angle < 0)
-		game->player.angle = 2 * PI;
 }
 
+/// @brief Moves the player forward or backward
+/// @param game ptr to the game structure
+/// @param cos_angle player angle cos to calculate new X position
+/// @param sin_angle player angle sin to calculate new Y position
+/// is_wall checks if the player is going to hit a wall
+/// @param speed speed of the player
 void	move_forward_backward(t_game *game, float cos_angle, float sin_angle,
 	int speed)
 {
@@ -43,6 +49,12 @@ void	move_forward_backward(t_game *game, float cos_angle, float sin_angle,
 	}
 }
 
+/// @brief Moves the player left or right
+/// @param game ptr to the game structure
+/// @param cos_angle player angle cos to calculate new y position
+/// @param sin_angle player angle sin to calculate new x position
+/// is_wall checks if the player is going to hit a wall
+/// @param speed speed of the player
 void	move_left_right(t_game *game, float cos_angle, float sin_angle,
 	int speed)
 {
@@ -71,6 +83,8 @@ void	move_left_right(t_game *game, float cos_angle, float sin_angle,
 	}
 }
 
+/// @brief updates the player position
+/// @param game ptr to the game structure
 void	move_player(t_game *game)
 {
 	int		speed;
