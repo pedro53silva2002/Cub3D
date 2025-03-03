@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-03 16:20:09 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:20:09 by vafernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/game.h"
 
 /// @brief Checks if the images is correct
@@ -66,9 +78,9 @@ void	ft_see_assets(int **colors, int **sides, char *str)
 		sides[0][2] += 1;
 	else if (!ft_check_design(str, "EA", 2) && ft_check_img(str))
 		sides[0][3] += 1;
-	else if (!ft_check_design(str, "F", 1))
+	else if (!ft_check_design(str, "F", 1) && ft_check_colors(str))
 		colors[0][0] += 1;
-	else if (!ft_check_design(str, "C", 1))
+	else if (!ft_check_design(str, "C", 1) && ft_check_colors(str))
 		colors[0][1] += 1;
 }
 
@@ -82,13 +94,14 @@ int	ft_check_colors(char *str)
 	int		i;
 
 	i = -1;
-	first_split = ft_split(str, ' ');
+	first_split = special_split(str);
 	second_split = ft_split(first_split[1], ',');
 	if (!ft_strncmp(str, "F", 1) || !ft_strncmp(str, "C", 1))
 	{
-		while (second_split[++i])
+		while (++i < 3)
 		{
-			if (ft_atoi(second_split[i]) > 255 || ft_atoi(second_split[i]) < 0)
+			if (!ft_is_color(second_split[i]) || ft_atoi(second_split[i]) > 255
+				|| ft_atoi(second_split[i]) < 0)
 			{
 				if (second_split)
 					ft_free_map(second_split);

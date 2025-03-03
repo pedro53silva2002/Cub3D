@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils4.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-03 16:20:17 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:20:17 by vafernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/game.h"
 
 /// @brief Checks if the colors and sides are correct
@@ -12,13 +24,13 @@ int	ft_has_sides_and_colors(int *colors, int *sides)
 	while (++i <= 1)
 	{
 		if (!colors[i] || colors[i] != 1)
-			return (0);
+			return (ft_perror("Error\nColors problem\n"), 0);
 	}
 	i = -1;
 	while (++i <= 3)
 	{
 		if (!sides[i] || sides[i] != 1)
-			return (0);
+			return (ft_perror("Error\nSides problem\n"), 0);
 	}
 	return (1);
 }
@@ -55,4 +67,40 @@ int	ft_is_map(char *str)
 	if (!check)
 		return (0);
 	return (1);
+}
+
+int	ft_find_player(char **tmp_map)
+{
+	int	i;
+	int	j;
+	int	result;
+
+	i = -1;
+	result = 0;
+	while (tmp_map[++i])
+	{
+		j = -1;
+		while (tmp_map[i][++j])
+		{
+			if (tmp_map[i][j] == 'N' || tmp_map[i][j] == 'S'
+					|| tmp_map[i][j] == 'W' || tmp_map[i][j] == 'E')
+				result += 1;
+		}
+	}
+	return (result);
+}
+
+int	ft_is_color(char *str)
+{
+	int	i;
+
+	i = -1;
+	if (!str)
+		return (0);
+	while (str[++i])
+	{
+		if (ft_isdigit(str[i]))
+			return (1);
+	}
+	return (0);
 }

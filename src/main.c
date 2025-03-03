@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-03 16:20:47 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:20:47 by vafernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/game.h"
 
 /// @brief Closes the game window and exits the program.
@@ -54,7 +66,6 @@ int	main(int argc, char **argv)
 
 	if (!ft_check(argc, argv))
 		return (0);
-	ft_printf("Map passed!\n");
 	init_game(&game, argv);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);

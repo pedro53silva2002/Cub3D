@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-03 16:20:00 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:20:00 by vafernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/game.h"
 
 /// @brief Generates a hardcoded map for the game.
@@ -6,7 +18,7 @@ char	**get_map(char **argv)
 {
 	char	**map;
 
-	if (BypassParse)
+	if (BYPASSPARSE)
 	{
 		map = malloc(sizeof(char *) * 11);
 		map[0] = "111111111111111";
@@ -21,7 +33,7 @@ char	**get_map(char **argv)
 		map[9] = "111111111111111";
 		map[10] = NULL;
 	}
-	if (!BypassParse)
+	if (!BYPASSPARSE)
 	{
 		map = ft_fill_design(argv);
 	}
