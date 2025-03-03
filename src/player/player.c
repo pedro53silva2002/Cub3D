@@ -33,13 +33,13 @@ bool	is_wall(float x, float y, t_game *game)
 float	ft_get_ang(char dir)
 {
 	if (dir == 'N')
-		return (PI / 2);
+		return (PI * 1.5);
 	else if (dir == 'E')
-		return (-PI);
+		return (PI * 2);
 	else if (dir == 'W')
 		return (PI);
 	else if (dir == 'S')
-		return (PI * 1.5);
+		return (PI / 2);		
 	return (0);
 }
 

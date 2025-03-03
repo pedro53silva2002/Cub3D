@@ -19,7 +19,7 @@
 # define BLOCK 64
 
 //Variables for debbuging
-# define DEBUG 0
+# define DEBUG 1
 # define BYPASSPARSE 0
 # define TEXTURE_DEBUG 0
 
