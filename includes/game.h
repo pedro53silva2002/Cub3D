@@ -281,6 +281,10 @@ int		ft_has_hole(char **map, int x, int y, int height);
 int		ft_check_holes(char **map, int height);
 int		ft_get_coor(char **tmp_map, char c);
 int		ft_check_unkchr(char **map);
+//Parsing_utils4
+int		ft_has_sides_and_colors(int *colors, int *sides);
+int		ft_strlens(char *str);
+int		ft_is_map(char *str);
 
 //Frees
 void	ft_free_map(char **map);

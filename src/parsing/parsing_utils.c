@@ -16,7 +16,7 @@ int	ft_check_borders_horizontal(char **tmp_map, int height)
 		i++;
 	}
 	if (tmp_map[0][i])
-		return (ft_printf("Border not closed (top).\n"), 0);
+		return (ft_perror("Error\nBorder not closed (top).\n"), 0);
 	i = 0;
 	while (tmp_map[height - 1][i]
 		&& (tmp_map[height - 1][i] == '1'
@@ -26,7 +26,7 @@ int	ft_check_borders_horizontal(char **tmp_map, int height)
 		i++;
 	}
 	if (tmp_map[height - 1][i])
-		return (ft_printf("Border not closed (bottom).\n"), 0);
+		return (ft_perror("Error\nBorder not closed (bottom).\n"), 0);
 	return (1);
 }
 
@@ -43,7 +43,7 @@ int	ft_check_borders_vertical(char **tmp_map, int height)
 		|| tmp_map[i][0] == ' ' || tmp_map[i][0] == '	'))
 		i++;
 	if (tmp_map[i] && tmp_map[i][0])
-		return (ft_printf("Border not closed (left).\n"), 0);
+		return (ft_perror("Error\nBorder not closed (left).\n"), 0);
 	i = 0;
 	while (i < (size_t)height)
 	{
@@ -56,7 +56,7 @@ int	ft_check_borders_vertical(char **tmp_map, int height)
 			break ;
 	}
 	if (tmp_map[i] && tmp_map[i][ft_strlen(tmp_map[i]) - 1])
-		return (ft_printf("Border not closed (right).\n"), 0);
+		return (ft_perror("Error\nBorder not closed (right).\n"), 0);
 	return (1);
 }
 
@@ -76,7 +76,7 @@ char	**ft_fill_design(char **argv)
 	str = get_next_line(fd);
 	while (str)
 	{
-		if ((str[0] == '1' || str[0] == '0' || str[0] == ' '))
+		if (ft_is_map(str))
 		{
 			map[i] = ft_strdupn(str);
 			i++;

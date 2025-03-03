@@ -1,28 +1,5 @@
 #include "../../includes/game.h"
 
-/// @brief Checks if the colors and sides are correct
-/// @param colors The colors to use on the map
-/// @param sides The textures of the sides
-/// @return Returns 0 if some check fails. Returns 1 if everything alright
-int	ft_has_sides_and_colors(int *colors, int *sides)
-{
-	int	i;
-
-	i = -1;
-	while (++i <= 1)
-	{
-		if (!colors[i] || colors[i] != 1)
-			return (0);
-	}
-	i = -1;
-	while (++i <= 3)
-	{
-		if (!sides[i] || sides[i] != 1)
-			return (0);
-	}
-	return (1);
-}
-
 /// @brief Checks if the images is correct
 /// @param str The line with the image path
 /// @return Returns 0 if some check fails. Returns 1 if everything alright
@@ -32,9 +9,12 @@ int	ft_check_img(char *str)
 	char	*xpm;
 	char	*path;
 	int		fd;
+	char	*dummy;
 
-	img = ft_split(str, ' ');
-	xpm = ft_substr(str, ft_strlen(str) - 5, 4);
+	dummy = ft_strsdup(ft_strdup(&str[ft_strlens(str)]));
+	img = ft_split(dummy, ' ');
+	xpm = ft_substr(dummy, ft_strlen(dummy) - 5, 4);
+	free(dummy);
 	path = ft_substr(img[1], 0, ft_strclen(img[1], '\n'));
 	if (!ft_strncmp(img[1], ".xpm", 4))
 		return (ft_free_map(img), free(xpm), free(path), 0);
@@ -48,6 +28,29 @@ int	ft_check_img(char *str)
 	return (ft_free_map(img), free(xpm), free(path), 1);
 }
 
+int	ft_check_design(char *str, char *symbol, int nbr)
+{
+	int		result;
+	char	*dummy;
+	int		i;
+
+	i = 0;
+	result = 1;
+	if (ft_strchr(str, 'F') || ft_strchr(str, 'C')
+		|| ft_strnstr(str, "NO", 1000)
+		|| ft_strnstr(str, "SO", 1000)
+		|| ft_strnstr(str, "WE", 1000)
+		|| ft_strnstr(str, "EA", 1000))
+	{
+		while (str[i] == ' ')
+			i++;
+		dummy = ft_strsdup(ft_strdupn(&str[i]));
+		result = ft_strncmp(dummy, symbol, nbr);
+		free(dummy);
+	}
+	return (result);
+}
+
 /// @brief Checks colors, sides and the image path
 /// @param colors The colors to use on the map
 /// @param sides The textures of the sides
@@ -55,17 +58,17 @@ int	ft_check_img(char *str)
 /// @return Returns 0 if some check fails. Returns 1 if everything alright
 void	ft_see_assets(int **colors, int **sides, char *str)
 {
-	if (!ft_strncmp(str, "NO", 2) && ft_check_img(str))
+	if (!ft_check_design(str, "NO", 2) && ft_check_img(str))
 		sides[0][0] += 1;
-	if (!ft_strncmp(str, "SO", 2) && ft_check_img(str))
+	else if (!ft_check_design(str, "SO", 2) && ft_check_img(str))
 		sides[0][1] += 1;
-	if (!ft_strncmp(str, "WE", 2) && ft_check_img(str))
+	else if (!ft_check_design(str, "WE", 2) && ft_check_img(str))
 		sides[0][2] += 1;
-	if (!ft_strncmp(str, "EA", 2) && ft_check_img(str))
+	else if (!ft_check_design(str, "EA", 2) && ft_check_img(str))
 		sides[0][3] += 1;
-	if (!ft_strncmp(str, "F", 1))
+	else if (!ft_check_design(str, "F", 1))
 		colors[0][0] += 1;
-	if (!ft_strncmp(str, "C", 1))
+	else if (!ft_check_design(str, "C", 1))
 		colors[0][1] += 1;
 }
 
