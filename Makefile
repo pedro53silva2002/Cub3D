@@ -19,6 +19,7 @@ SRC =	src/main.c \
 		src/parsing/parsing_utils2.c \
 		src/parsing/parsing_utils3.c \
 		src/parsing/parsing_utils4.c \
+		src/parsing/parsing_utils5.c \
 		src/draw/draw.c \
 		src/draw/draw_utils.c \
 		src/draw/draw_line.c \
@@ -63,7 +64,7 @@ re: fclean all
 
 
 valgrind: 
-	/usr/bin/valgrind --leak-check=full -s --show-leak-kinds=all ./$(NAME) ./maps/good/subject_map.cub
+	/usr/bin/valgrind --leak-check=full -s --show-leak-kinds=all ./$(NAME) ./maps/good/cheese_maze.cub
 
 download:
 	@wget https://cdn.intra.42.fr/document/document/27195/minilibx-linux.tgz

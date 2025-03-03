@@ -78,25 +78,25 @@ int	get_texture_index(t_hit_side hit_side)
 	if (hit_side == HIT_NORTH)
 	{
 		if (TEXTURE_DEBUG)
-			printf(DebugSWall);
+			printf(DEBUGSWALL);
 		return (NORTH_WALL_T_I);
 	}
 	else if (hit_side == HIT_SOUTH)
 	{
 		if (TEXTURE_DEBUG)
-			printf(DebugNWall);
+			printf(DEBUGNWALL);
 		return (SOUTH_WALL_T_I);
 	}
 	else if (hit_side == HIT_EAST)
 	{
 		if (TEXTURE_DEBUG)
-			printf(DebugWWall);
+			printf(DEBUGWWALL);
 		return (EAST_WALL_T_I);
 	}
 	else if (hit_side == HIT_WEST)
 	{
 		if (TEXTURE_DEBUG)
-			printf(DebugEWall);
+			printf(DEBUGEWALL);
 		return (WEST_WALL_T_I);
 	}
 	return (DEFAULT_TEXTURE_INDEX);
