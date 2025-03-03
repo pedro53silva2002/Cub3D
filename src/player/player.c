@@ -39,7 +39,7 @@ float	ft_get_ang(char dir)
 	else if (dir == 'W')
 		return (PI);
 	else if (dir == 'S')
-		return (PI / 2);		
+		return (PI / 2);
 	return (0);
 }
 
