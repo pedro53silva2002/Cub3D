@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*   By: vafernan <vafernan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-03 16:22:06 by vafernan          #+#    #+#             */
-/*   Updated: 2025-03-03 16:22:06 by vafernan         ###   ########.fr       */
+/*   Created: 2025/03/03 16:22:06 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/06 17:41:53 by vafernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define BLOCK 64
 
 //Variables for debbuging
-# define DEBUG 1
+# define DEBUG 0
 # define BYPASSPARSE 0
 # define TEXTURE_DEBUG 0
 

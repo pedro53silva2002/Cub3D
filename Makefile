@@ -67,7 +67,7 @@ valgrind:
 	/usr/bin/valgrind --leak-check=full -s --show-leak-kinds=all ./$(NAME) ./maps/good/cheese_maze.cub
 
 download:
-	@wget https://cdn.intra.42.fr/document/document/27195/minilibx-linux.tgz
+	@wget https://cdn.intra.42.fr/document/document/31395/minilibx-linux.tgz
 	@tar -xzf minilibx-linux.tgz -C includes
 	@rm minilibx-linux.tgz
 
