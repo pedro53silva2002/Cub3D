@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/03 16:22:06 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/08 16:51:47 by peferrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GAME_H
 # define GAME_H
 
@@ -10,7 +22,6 @@
 # define DEBUG 0
 # define BYPASSPARSE 0
 # define TEXTURE_DEBUG 0
-# define MAPCOLOR 0x0000FF;
 
 //Defines for textures index
 # define NORTH_WALL_T_I 0
@@ -192,7 +203,6 @@ typedef struct s_game
 // Function declarations
 //Draw
 void	put_pixel(int x, int y, int color, t_game *game);
-void	put_texture_pixel(int x, int y, int tex_x, int tex_y, t_game *game, int texture_index);
 void	clear_image(t_game *game);
 float	distance(float x, float y);
 float	fixed_dist(t_game *game);
@@ -257,7 +267,7 @@ int		ft_check_unkchr(char **map);
 //Parsing_utils4
 int		ft_has_sides_and_colors(int *colors, int *sides);
 int		ft_strlens(char *str);
-int		ft_is_map(char *str);
+void	ft_add_line(char *str, char ***map, int height);
 int		ft_find_player(char **tmp_map);
 int		ft_is_color(char *str);
 //Parsing_utils5

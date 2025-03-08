@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug_draw_utils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-03 16:19:05 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:19:05 by vafernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/game.h"
 
 /// @brief Draws the map by iterating through the map array and drawing
@@ -22,7 +34,7 @@ void	draw_map(t_game *game)
 				params.x = x * BLOCK;
 				params.y = y * BLOCK;
 				params.size = BLOCK;
-				params.color = MAPCOLOR;
+				params.color = 0x0000FF;
 				debug_draw_square(&params, game);
 			}
 			x++;

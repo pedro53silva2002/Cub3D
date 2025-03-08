@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils4.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/03 16:20:17 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/08 16:54:43 by peferrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/game.h"
 
 /// @brief Checks if the colors and sides are correct
@@ -33,28 +45,15 @@ int	ft_strlens(char *str)
 	return (i);
 }
 
-int	ft_is_map(char *str)
+void	ft_add_line(char *str, char ***map, int height)
 {
-	int	i;
-	int	check;
-
-	i = -1;
-	check = 0;
-	if (!str)
-		return (0);
-	while (str[++i] && str[i] != '\n')
-	{
-		if (str[i] != '1' && str[i] != '0'
-			&& str[i] != ' ' && str[i] != 'W'
-			&& str[i] != 'E' && str[i] != 'N'
-			&& str[i] != 'S')
-			return (0);
-		if (str[i] == '1')
-			check = 1;
-	}
-	if (!check)
-		return (0);
-	return (1);
+	static int	i;
+	
+	//ft_printf("SECOND \t %d\n", i);
+	(*map)[i] = ft_strdupn(str);
+	i++;
+	if (i == height)
+		i = 0;
 }
 
 int	ft_find_player(char **tmp_map)

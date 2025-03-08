@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/03 16:20:51 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/08 18:01:57 by peferrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/game.h"
 
 char	*ft_strdupn(const char *str1)
@@ -78,15 +90,13 @@ char	*ft_strsdup(char *str1)
 	i = 0;
 	while (str1[i] == ' ')
 		i++;
-	i = i - 1;
-	while (str1[++i] != '\0')
+	while (str1[i] != '\0')
 	{
-		if (str1[i] != ' ' || (str1[i] == ' '
+		/* if (str1[i] != ' ' || (str1[i] == ' '
 				&& i == 1) || (str1[i] == ' '
-				&& i == 2 && str1[i - 1] != ' '))
-		{
+				&& i == 2 && str1[i - 1] != ' ')) */
 			dupstr[++j] = str1[i];
-		}
+		i++;
 	}
 	dupstr[j + 1] = '\0';
 	return (free(str1), dupstr);

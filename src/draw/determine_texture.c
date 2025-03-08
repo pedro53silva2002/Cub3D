@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   determine_texture.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-03 16:19:35 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:19:35 by vafernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/game.h"
 
 /// @brief Handles the case where the wall is at the edge of the map.

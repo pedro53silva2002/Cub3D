@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-03 16:20:38 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:20:38 by vafernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/game.h"
 
 /// @brief Checks if a point is inside a wall in the map.
@@ -21,13 +33,13 @@ bool	is_wall(float x, float y, t_game *game)
 float	ft_get_ang(char dir)
 {
 	if (dir == 'N')
-		return (PI / 2);
+		return (PI * 1.5);
 	else if (dir == 'E')
-		return (-PI);
+		return (PI * 2);
 	else if (dir == 'W')
 		return (PI);
 	else if (dir == 'S')
-		return (PI * 1.5);
+		return (PI / 2);
 	return (0);
 }
 
