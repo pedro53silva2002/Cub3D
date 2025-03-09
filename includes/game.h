@@ -272,6 +272,10 @@ int		ft_find_player(char **tmp_map);
 int		ft_is_color(char *str);
 //Parsing_utils5
 char	**special_split(char *str);
+int		is_config_line(char *str);
+int		is_empty_line(char *str);
+int		map_design(char *file);
+int		ft_count_rows(char **map);
 
 //Frees
 void	ft_free_map(char **map);
