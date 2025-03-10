@@ -29,7 +29,27 @@ SRC =	src/main.c \
 		src/draw/debug/debug_draw_utils.c \
 		src/draw/debug/debug_draw_utils2.c
 OBJ_DIR = obj
-OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
+OBJ =	obj/main.o \
+		obj/inits/init.o \
+		obj/inits/init_utils.o \
+		obj/player/player.o \
+		obj/player/player_move.o \
+		obj/frees.o \
+		obj/utils.o \
+		obj/parsing/parsing.o \
+		obj/parsing/parsing_utils.o \
+		obj/parsing/parsing_utils2.o \
+		obj/parsing/parsing_utils3.o \
+		obj/parsing/parsing_utils4.o \
+		obj/parsing/parsing_utils5.o \
+		obj/draw/draw.o \
+		obj/draw/draw_utils.o \
+		obj/draw/draw_line.o \
+		obj/draw/cast_ray.o \
+		obj/draw/determine_texture.o \
+		obj/draw/debug/debug_draw.o \
+		obj/draw/debug/debug_draw_utils.o \
+		obj/draw/debug/debug_draw_utils2.o
 
 all: $(NAME)
 
@@ -64,7 +84,7 @@ re: fclean all
 
 
 valgrind: 
-	/usr/bin/valgrind --leak-check=full -s --show-leak-kinds=all ./$(NAME) ./maps/good/square.cub
+	/usr/bin/valgrind --leak-check=full -s --show-leak-kinds=all ./$(NAME) ./maps/good/creepy.cub
 
 download:
 	@wget https://cdn.intra.42.fr/document/document/31395/minilibx-linux.tgz

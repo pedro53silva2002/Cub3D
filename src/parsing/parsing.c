@@ -93,9 +93,18 @@ int	ft_valid_map(char **argv)
 {
 	char	**tmp_map;
 	int		height;
+	int		tmp_map_height;
 
 	tmp_map = ft_fill_design(argv);
-	height = ft_rowlen(argv[1]);
+	if (!tmp_map)
+		return (0);
+	tmp_map_height = ft_count_rows(tmp_map);
+	height = map_design(argv[1]);
+	if (tmp_map_height != height)
+	{
+		ft_free_map(tmp_map);
+		return (ft_perror("Error\nInvalid char on map\n"), 0);
+	}
 	if (!ft_check_path(tmp_map, height))
 		return (ft_free_map(tmp_map), 0);
 	return (ft_free_map(tmp_map), 1);
