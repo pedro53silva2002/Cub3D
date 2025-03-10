@@ -148,18 +148,15 @@ int	ft_rowlen(char *file)
 /// @return Returns 0 if doesn't end with curb else returns 1.
 int	ft_checkfile(char *file)
 {
-	char	*str;
-	char	*filecpy;
-	int		len;
+	int	len;
 
-	str = ".cub";
 	len = ft_strlen(file);
-	filecpy = ft_substr(file, len - 4, 4);
-	if (ft_strncmp(str, filecpy, 4) != 0)
-	{
-		free(filecpy);
+	if (len < 4)
 		return (0);
-	}
-	free(filecpy);
+	if (ft_strncmp(file + len - 4, ".cub", 4) != 0)
+		return (0);
+	if (len > 4 && (file[len - 5] == '/' || file[len - 5] == ' '
+			|| file[len - 5] == '\t'))
+		return (0);
 	return (1);
 }

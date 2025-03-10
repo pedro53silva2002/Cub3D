@@ -54,11 +54,11 @@ clean:
 	@make clean -s -C $(MLX_DIR)
 	@make clean -C $(LIBFT_DIR)
 	@rm -rf $(OBJ_DIR)
-	@rm -f $(NAME)
 
 fclean: clean
 	@make fclean -C $(LIBFT_DIR)
 	@rm -f $(NAME)
+	@rm -rf $(MLX_DIR)
 
 re: fclean all
 
