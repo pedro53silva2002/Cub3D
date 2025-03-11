@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-03 16:20:00 by vafernan          #+#    #+#             */
-/*   Updated: 2025-03-03 16:20:00 by vafernan         ###   ########.fr       */
+/*   Created: 2025/03/03 16:20:00 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/11 15:11:58 by peferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_get_wall_path(char **argv, char *side)
 	return (close(fd), NULL);
 }
 
-int	ft_get_color(char **argv, char side, int pricol)
+int	ft_get_color(char **argv, char *side, int pricol)
 {
 	int		fd;
 	char	*str;
@@ -81,7 +81,7 @@ int	ft_get_color(char **argv, char side, int pricol)
 	str = get_next_line(fd);
 	while (str)
 	{
-		if (str[0] == side)
+		if (ft_strnstr(str, side, 1000))
 		{
 			str = ft_strsdup(str);
 			lines = ft_split(str, ' ');
@@ -93,7 +93,7 @@ int	ft_get_color(char **argv, char side, int pricol)
 		free(str);
 		str = get_next_line(fd);
 	}
-	return (close(fd), color);
+	return (close(fd), 0);
 }
 
 /// @brief Initializes the game structure, 
@@ -111,12 +111,12 @@ void	init_game(t_game *game, char **argv)
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->data = mlx_get_data_addr(game->img, &game->bpp,
 			&game->size_line, &game->endian);
-	game->ceiling_r = ft_get_color(argv, 'C', 0);
-	game->ceiling_g = ft_get_color(argv, 'C', 1);
-	game->ceiling_b = ft_get_color(argv, 'C', 2);
-	game->floor_r = ft_get_color(argv, 'F', 0);
-	game->floor_g = ft_get_color(argv, 'F', 1);
-	game->floor_b = ft_get_color(argv, 'F', 2);
+	game->ceiling_r = ft_get_color(argv, "C", 0);
+	game->ceiling_g = ft_get_color(argv, "C", 1);
+	game->ceiling_b = ft_get_color(argv, "C", 2);
+	game->floor_r = ft_get_color(argv, "F", 0);
+	game->floor_g = ft_get_color(argv, "F", 1);
+	game->floor_b = ft_get_color(argv, "F", 2);
 	ft_init_textures(&game, argv);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	game->texture_state.previous_hit_side = -1;

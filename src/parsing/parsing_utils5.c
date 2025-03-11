@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-03 16:20:21 by vafernan          #+#    #+#             */
-/*   Updated: 2025-03-03 16:20:21 by vafernan         ###   ########.fr       */
+/*   Created: 2025/03/03 16:20:21 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/11 14:45:14 by peferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

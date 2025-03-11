@@ -4,7 +4,7 @@
 BINARY="./cub3D"
 
 # Directory containing the maps, do twice for good and bad maps
-MAP_DIR="./maps/good"
+MAP_DIR="./maps/bad"
 
 # Loop through all .cub files in the maps/good directory
 for map_file in "$MAP_DIR"/*.cub; do
