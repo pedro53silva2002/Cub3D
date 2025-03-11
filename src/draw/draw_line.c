@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-03 16:19:41 by vafernan          #+#    #+#             */
-/*   Updated: 2025-03-03 16:19:41 by vafernan         ###   ########.fr       */
+/*   Created: 2025/03/03 16:19:41 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/11 11:18:38 by peferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,14 @@ void	draw_line(t_game *game, float ray_angle, int screen_x)
 	vars.ceiling_color = (game->ceiling_r << 16) | (game->ceiling_g << 8)
 		| game->ceiling_b;
 	draw_ceiling(game, screen_x, game->wall_slice.start_y, vars.ceiling_color);
+	if (vars.texture_index < 0)
+		vars.texture_index = 0;
+	if (vars.texture_index > 64)
+		vars.texture_index = 64;
+	if (vars.tex_x < 0)
+		vars.tex_x = 0;
+	if (vars.tex_x > 64)
+		vars.tex_x = 64;
 	draw_vertical_stripe(game, vars.texture_index, vars.tex_x, screen_x);
 	vars.floor_color = (game->floor_r << 16) | (game->floor_g << 8)
 		| game->floor_b;

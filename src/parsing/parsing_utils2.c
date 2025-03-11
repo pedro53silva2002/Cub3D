@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-03 16:20:09 by vafernan          #+#    #+#             */
-/*   Updated: 2025-03-03 16:20:09 by vafernan         ###   ########.fr       */
+/*   Created: 2025/03/03 16:20:09 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/11 13:00:44 by peferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ft_check_img(char *str)
 	img = ft_split(dummy, ' ');
 	xpm = ft_substr(dummy, ft_strlen(dummy) - 5, 4);
 	free(dummy);
+	if (!img[1])
+		return (ft_free_map(img), free(xpm), 0);
 	path = ft_substr(img[1], 0, ft_strclen(img[1], '\n'));
 	if (!ft_strncmp(img[1], ".xpm", 4))
 		return (ft_free_map(img), free(xpm), free(path), 0);
