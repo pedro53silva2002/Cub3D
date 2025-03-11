@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 16:20:17 by vafernan          #+#    #+#             */
-/*   Updated: 2025/03/08 16:54:43 by peferrei         ###   ########.fr       */
+/*   Created: 2025-03-03 16:20:17 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:20:17 by vafernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,28 @@ int	ft_strlens(char *str)
 	return (i);
 }
 
-void	ft_add_line(char *str, char ***map, int height)
+int	ft_is_map(char *str)
 {
-	static int	i;
-	
-	//ft_printf("SECOND \t %d\n", i);
-	(*map)[i] = ft_strdupn(str);
-	i++;
-	if (i == height)
-		i = 0;
+	int	i;
+	int	check;
+
+	i = -1;
+	check = 0;
+	if (!str)
+		return (0);
+	while (str[++i] && str[i] != '\n')
+	{
+		if (str[i] != '1' && str[i] != '0'
+			&& str[i] != ' ' && str[i] != 'W'
+			&& str[i] != 'E' && str[i] != 'N'
+			&& str[i] != 'S')
+			return (0);
+		if (str[i] == '1')
+			check = 1;
+	}
+	if (!check)
+		return (0);
+	return (1);
 }
 
 int	ft_find_player(char **tmp_map)

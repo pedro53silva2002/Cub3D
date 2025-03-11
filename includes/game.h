@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vafernan <vafernan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:22:06 by vafernan          #+#    #+#             */
-/*   Updated: 2025/03/08 16:51:47 by peferrei         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:41:53 by vafernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ int		ft_check_unkchr(char **map);
 //Parsing_utils4
 int		ft_has_sides_and_colors(int *colors, int *sides);
 int		ft_strlens(char *str);
-void	ft_add_line(char *str, char ***map, int height);
+int		ft_is_map(char *str);
 int		ft_find_player(char **tmp_map);
 int		ft_is_color(char *str);
 //Parsing_utils5

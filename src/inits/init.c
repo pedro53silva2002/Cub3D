@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 16:20:00 by vafernan          #+#    #+#             */
-/*   Updated: 2025/03/08 17:15:41 by peferrei         ###   ########.fr       */
+/*   Created: 2025-03-03 16:20:00 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:20:00 by vafernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,12 @@ int	ft_get_color(char **argv, char side, int pricol)
 	str = get_next_line(fd);
 	while (str)
 	{
-		str = ft_strsdup(str);
 		if (str[0] == side)
 		{
-			//ft_printf("ValUe: %s\n", str);
+			str = ft_strsdup(str);
 			lines = ft_split(str, ' ');
 			rgb = ft_split(lines[1], ',');
 			color = ft_atoi(rgb[pricol]);
-			//ft_printf("VALUE: %d\tSIDE: %c\n", color, side);
 			ft_free_map(lines);
 			return (ft_free_map(rgb), free(str), ft_free_fd(fd), color);
 		}
@@ -119,7 +117,6 @@ void	init_game(t_game *game, char **argv)
 	game->floor_r = ft_get_color(argv, 'F', 0);
 	game->floor_g = ft_get_color(argv, 'F', 1);
 	game->floor_b = ft_get_color(argv, 'F', 2);
-	//ft_printf("R: %d\tG: %d\tB: %d\n", game->floor_r, game->floor_g, game->floor_b);
 	ft_init_textures(&game, argv);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	game->texture_state.previous_hit_side = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   determine_texture.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-03 16:19:35 by vafernan          #+#    #+#             */
-/*   Updated: 2025-03-03 16:19:35 by vafernan         ###   ########.fr       */
+/*   Created: 2025/03/03 16:19:35 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/10 17:36:32 by peferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ int	determine_texture_index(t_game *game, int map_x, int map_y,
 	if (map_x == 0 || map_y == 0 || map_x == game->map_width - 1
 		|| map_y == game->map_height - 1)
 	{
+		if (map_y >= game->map_height || map_x >= game->map_width)
+			return (-1);
 		texture_index = handle_hard_case(game, map_x, map_y);
 		if (texture_index != -1)
 			return (texture_index);

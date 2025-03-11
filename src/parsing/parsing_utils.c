@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 16:20:04 by vafernan          #+#    #+#             */
-/*   Updated: 2025/03/08 16:53:33 by peferrei         ###   ########.fr       */
+/*   Created: 2025-03-03 16:20:04 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:20:04 by vafernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,27 +83,22 @@ char	**ft_fill_design(char **argv)
 	int		i;
 	char	*str;
 	char	**map;
-	int		assets;
 
 	map = malloc(sizeof(char *) * (ft_rowlen(argv[1]) + 1));
-	assets = 0;
+	i = 0;
 	fd = open(argv[1], O_RDONLY);
 	str = get_next_line(fd);
-	//ft_printf("Height: %d\n", ft_rowlen(argv[1]));
 	while (str)
 	{
-		i = 0;
-		//ft_printf("FIRST\n");
-		while (str[i] == ' ')
+		if (ft_is_map(str))
+		{
+			map[i] = ft_strdupn(str);
 			i++;
-		if (assets == 6 && str[i] != '\n')
-			ft_add_line(str, &map, ft_rowlen(argv[1]));	
-		if ((str[i] == 'N' || str[i] == 'S' || str[i] == 'W' || str[i] == 'E' || str[i] == 'C' || str[i] == 'F'))
-			assets++;
+		}
 		free(str);
 		str = get_next_line(fd);
 	}
-	map[ft_rowlen(argv[1])] = NULL;
+	map[i] = NULL;
 	return (map);
 }
 
@@ -114,33 +109,19 @@ int	ft_rowlen(char *file)
 {
 	int		fd;
 	int		i;
-	int		j;
-	int		assets;
 	char	*str;
 
-	j = 0;
-	assets = 0;
+	i = 0;
 	fd = open(file, O_RDONLY);
 	str = get_next_line(fd);
 	while (str)
 	{
-		i = 0;
-		while (str[i] == ' ')
+		if (ft_is_map(str))
 			i++;
-		if (assets == 6 && str[i] != '\n')
-		{
-			j++;	
-			//ft_printf("STR: %s\t%d\n", str, j);
-		}
-		if ((str[i] == 'N' || str[i] == 'S' || str[i] == 'W' || str[i] == 'E' || str[i] == 'C' || str[i] == 'F'))
-		{
-			assets++;
-			//ft_printf("ASSETS: %s\t%d\n", str, assets);	
-		}
 		free(str);
 		str = get_next_line(fd);
 	}
-	return (j);
+	return (i);
 }
 
 /// @brief Checks if the file ends with .cub
