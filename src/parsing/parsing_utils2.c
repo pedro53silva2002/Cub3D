@@ -1,30 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/03 16:20:09 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/11 14:47:09 by peferrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/game.h"
-
-/// @brief Checks if the colors and sides are correct
-/// @param colors The colors to use on the map
-/// @param sides The textures of the sides
-/// @return Returns 0 if some check fails. Returns 1 if everything alright
-int	ft_has_sides_and_colors(int *colors, int *sides)
-{
-	int	i;
-
-	(void)colors;
-	// ft_printf("NO: %d\tSO: %d\tWE: %d\tEA: %d\nF: %d\tC: %d\n", sides[0],sides[1],sides[2],sides[3], colors[0],colors[1]);
-	i = -1;
-	while (++i <= 1)
-	{
-		if (!colors[i] || colors[i] != 1)
-			return (0);
-	}
-	i = -1;
-	while (++i <= 3)
-	{
-		// ft_printf("Value: %d\n", sides[1]);
-		if (!sides[i] || sides[i] != 1)
-			return (0);
-	}
-	return (1);
-}
 
 /// @brief Checks if the images is correct
 /// @param str The line with the image path
@@ -33,17 +19,50 @@ int	ft_check_img(char *str)
 {
 	char	**img;
 	char	*xpm;
+	char	*path;
+	int		fd;
+	char	*dummy;
 
-	img = ft_split(str, ' ');
-	xpm = ft_substr(str, ft_strlen(str) - 5, 4);
-	//ft_printf("FIRST\n");
+	dummy = ft_strsdup(ft_strdup(&str[ft_strlens(str)]));
+	img = ft_split(dummy, ' ');
+	xpm = ft_substr(dummy, ft_strlen(dummy) - 5, 4);
+	free(dummy);
+	if (!img[1])
+		return (ft_free_map(img), free(xpm), 0);
+	path = ft_substr(img[1], 0, ft_strclen(img[1], '\n'));
 	if (!ft_strncmp(img[1], ".xpm", 4))
-		return (ft_free_map(img), free(xpm), 0);
-	//ft_printf("Value: %s\t Bool: %d\n", img[1], ft_strcmp(img[1], ".xpm"));
+		return (ft_free_map(img), free(xpm), free(path), 0);
 	if (ft_strcmp(xpm, ".xpm"))
-		return (ft_free_map(img), free(xpm), 0);
-	//ft_printf("THIRD\n");
-	return (ft_free_map(img), free(xpm), 1);
+		return (ft_free_map(img), free(xpm), free(path), 0);
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+	{
+		return (ft_free_map(img), free(xpm), free(path), 0);
+	}
+	return (ft_free_map(img), free(xpm), free(path), 1);
+}
+
+int	ft_check_design(char *str, char *symbol, int nbr)
+{
+	int		result;
+	char	*dummy;
+	int		i;
+
+	i = 0;
+	result = 1;
+	if (ft_strchr(str, 'F') || ft_strchr(str, 'C')
+		|| ft_strnstr(str, "NO", 1000)
+		|| ft_strnstr(str, "SO", 1000)
+		|| ft_strnstr(str, "WE", 1000)
+		|| ft_strnstr(str, "EA", 1000))
+	{
+		while (str[i] == ' ')
+			i++;
+		dummy = ft_strsdup(ft_strdupn(&str[i]));
+		result = ft_strncmp(dummy, symbol, nbr);
+		free(dummy);
+	}
+	return (result);
 }
 
 /// @brief Checks colors, sides and the image path
@@ -53,17 +72,17 @@ int	ft_check_img(char *str)
 /// @return Returns 0 if some check fails. Returns 1 if everything alright
 void	ft_see_assets(int **colors, int **sides, char *str)
 {
-	if (!ft_strncmp(str, "NO", 2) && ft_check_img(str))
+	if (!ft_check_design(str, "NO", 2) && ft_check_img(str))
 		sides[0][0] += 1;
-	if (!ft_strncmp(str, "SO", 2) && ft_check_img(str))
+	else if (!ft_check_design(str, "SO", 2) && ft_check_img(str))
 		sides[0][1] += 1;
-	if (!ft_strncmp(str, "WE", 2) && ft_check_img(str))
+	else if (!ft_check_design(str, "WE", 2) && ft_check_img(str))
 		sides[0][2] += 1;
-	if (!ft_strncmp(str, "EA", 2) && ft_check_img(str))
+	else if (!ft_check_design(str, "EA", 2) && ft_check_img(str))
 		sides[0][3] += 1;
-	if (!ft_strncmp(str, "F", 1))
+	else if (!ft_check_design(str, "F", 1) && ft_check_colors(str))
 		colors[0][0] += 1;
-	if (!ft_strncmp(str, "C", 1))
+	else if (!ft_check_design(str, "C", 1) && ft_check_colors(str))
 		colors[0][1] += 1;
 }
 
@@ -77,13 +96,14 @@ int	ft_check_colors(char *str)
 	int		i;
 
 	i = -1;
-	first_split = ft_split(str, ' ');
+	first_split = special_split(str);
 	second_split = ft_split(first_split[1], ',');
 	if (!ft_strncmp(str, "F", 1) || !ft_strncmp(str, "C", 1))
 	{
-		while (second_split[++i])
+		while (++i < 3)
 		{
-			if (ft_atoi(second_split[i]) > 255 || ft_atoi(second_split[i]) < 0)
+			if (!ft_is_color(second_split[i]) || ft_atoi(second_split[i]) > 255
+				|| ft_atoi(second_split[i]) < 0)
 			{
 				if (second_split)
 					ft_free_map(second_split);
@@ -98,16 +118,17 @@ int	ft_check_colors(char *str)
 	return (1);
 }
 
-/// @brief Checks if the player has a good path (while the game doesn't have a end it doesn't do much)
+/// @brief Checks if the player has a good path
+/// (while the game doesn't have a end it doesn't do much)
 /// @param map The map
 /// @param x X coordinates
 /// @param y Y coordinates
-/// @return Returns 0 if it doesn't found nothing wrong and returns 1 if it founds something wrong
+/// @return Returns 0 if it doesn't found nothing 
+/// wrong and returns 1 if it founds something wrong
 int	ft_find_path(char **map, int x, int y)
 {
 	static int	change;
 
-	// ft_printf("POINT: %d\tCoor: %d/%d\n", change, x, y);
 	if (change)
 		return (1);
 	if (!map[y][x])

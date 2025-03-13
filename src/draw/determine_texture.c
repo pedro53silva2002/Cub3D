@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   determine_texture.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: peferrei <peferrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/03 16:19:35 by vafernan          #+#    #+#             */
+/*   Updated: 2025/03/10 17:36:32 by peferrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/game.h"
 
 /// @brief Handles the case where the wall is at the edge of the map.
@@ -78,25 +90,25 @@ int	get_texture_index(t_hit_side hit_side)
 	if (hit_side == HIT_NORTH)
 	{
 		if (TEXTURE_DEBUG)
-			printf(DebugSWall);
+			printf(DEBUGSWALL);
 		return (NORTH_WALL_T_I);
 	}
 	else if (hit_side == HIT_SOUTH)
 	{
 		if (TEXTURE_DEBUG)
-			printf(DebugNWall);
+			printf(DEBUGNWALL);
 		return (SOUTH_WALL_T_I);
 	}
 	else if (hit_side == HIT_EAST)
 	{
 		if (TEXTURE_DEBUG)
-			printf(DebugWWall);
+			printf(DEBUGWWALL);
 		return (EAST_WALL_T_I);
 	}
 	else if (hit_side == HIT_WEST)
 	{
 		if (TEXTURE_DEBUG)
-			printf(DebugEWall);
+			printf(DEBUGEWALL);
 		return (WEST_WALL_T_I);
 	}
 	return (DEFAULT_TEXTURE_INDEX);
@@ -116,6 +128,8 @@ int	determine_texture_index(t_game *game, int map_x, int map_y,
 	if (map_x == 0 || map_y == 0 || map_x == game->map_width - 1
 		|| map_y == game->map_height - 1)
 	{
+		if (map_y >= game->map_height || map_x >= game->map_width)
+			return (-1);
 		texture_index = handle_hard_case(game, map_x, map_y);
 		if (texture_index != -1)
 			return (texture_index);

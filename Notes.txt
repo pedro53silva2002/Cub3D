@@ -4,6 +4,24 @@ https://www.youtube.com/watch?v=G9i78WoBBIU
 
 Changelog:
 
+9/03:
+{
+	adicionei as funcoes:
+	is_config_line;
+	is_empty_line;
+	map_design;
+	alterei o ft_valid_map orginal,
+	basicament o tmp_map que tinhas eliminava linhas que tivessesm chars unknown,
+	o que eu fiz foi criar outro mapa e com isso comparar o numero de linhas dos 2,
+	se for diferente da erro de unknown char.
+
+	ciei um script que te corre os mapas com valgrind, fechas um abre outro no caso dos goog
+	os bad ele fecha porque dao erro...
+	so tens de mudar a pasta para os good ou bad
+
+	removi uns wildcards do makefile
+}
+
 11/02:
 	{
 		Splited main.c, created draw.c;

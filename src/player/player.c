@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vafernan < vafernan@student.42porto.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-03 16:20:38 by vafernan          #+#    #+#             */
+/*   Updated: 2025-03-03 16:20:38 by vafernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/game.h"
 
 /// @brief Checks if a point is inside a wall in the map.
@@ -12,19 +24,33 @@ bool	is_wall(float x, float y, t_game *game)
 
 	map_x = (int)(x / BLOCK);
 	map_y = (int)(y / BLOCK);
-	if (map_x < 0 || map_x >= game->map_width || map_y < 0
-		|| map_y >= game->map_height)
+	if (map_x < 0 || map_x >= game->map_width
+		|| map_y < 0 || map_y >= game->map_height)
 		return (true);
 	return (game->map[map_y][map_x] == '1');
+}
+
+float	ft_get_ang(char dir)
+{
+	if (dir == 'N')
+		return (PI * 1.5);
+	else if (dir == 'E')
+		return (PI * 2);
+	else if (dir == 'W')
+		return (PI);
+	else if (dir == 'S')
+		return (PI / 2);
+	return (0);
 }
 
 /// @brief Initializes the player structure with default values.
 /// @param player A pointer to the player structure to be initialized.
 void	init_player(t_player *player, char **map)
 {
-	player->x = ft_get_coor(map, 'x');
-	player->y = ft_get_coor(map, 'y');
-	player->angle = PI / 2;
+	player->direction = ft_get_dir(map);
+	player->x = (ft_get_coor(map, 'x') * 64) + 32;
+	player->y = (ft_get_coor(map, 'y') * 64) + 32;
+	player->angle = ft_get_ang(player->direction);
 	player->key_up = false;
 	player->key_down = false;
 	player->key_right = false;
@@ -33,8 +59,8 @@ void	init_player(t_player *player, char **map)
 	player->right_rotate = false;
 }
 
-/// @brief Handles key press events and updates the player's movement
-//	and rotation flags.
+/// @brief Handles key press events and updates the 
+/// player's movement and rotation flags.
 /// @param keycode The key code of the pressed key.
 /// @param player A pointer to the player structure.
 /// @return Always returns 0.
@@ -57,8 +83,8 @@ int	key_press(int keycode, t_game *game)
 	return (0);
 }
 
-/// @brief Handles key release events and updates the player's movement
-//	and rotation flags.
+/// @brief Handles key release events and updates 
+///	the player's movement and rotation flags.
 /// @param keycode The key code of the released key.
 /// @param player A pointer to the player structure.
 /// @return Always returns 0.
